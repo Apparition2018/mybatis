@@ -13,6 +13,7 @@
         <module>mybatis</module>
 		<module>mybatis-plus-basics</module>
 		<module>mybatis-plus-advance</module>
+		<module>mybatis-plus-generator</module>
     </modules>
 
 </project>

@@ -4,11 +4,11 @@
 
     <!--<select id="selectCustom" resultType="com.ljh.mp.entity.User">-->
     <!-- 配置了 mybatis-plus.typeAliasesPackage，resultType 可以直接写 User -->
-    <select id="selectCustom" resultType="User">
+    <select id="selectCustom" resultType="com.ljh.mp.entity.User">
         select * from user ${ew.customSqlSegment}
     </select>
 
-    <select id="selectCustomPage" resultType="map">
+    <select id="selectCustomPage" resultType="java.util.Map">
         select u1.id, u1.name, u2.name managerName
         from user u1
         left join user u2 on u1.manager_id = u2.id

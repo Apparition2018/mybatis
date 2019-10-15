@@ -3,6 +3,7 @@ package com.ljh.mp.config;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.core.parser.ISqlParserFilter;
 import com.baomidou.mybatisplus.core.parser.SqlParserHelper;
+import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
 import com.baomidou.mybatisplus.extension.parsers.DynamicTableNameParser;
 import com.baomidou.mybatisplus.extension.parsers.ITableNameHandler;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
@@ -11,6 +12,7 @@ import com.baomidou.mybatisplus.extension.plugins.tenant.TenantHandler;
 import com.baomidou.mybatisplus.extension.plugins.tenant.TenantSqlParser;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
+import net.sf.jsqlparser.statement.delete.Delete;
 import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Bean;
@@ -67,14 +69,24 @@ public class MybatisPlusConfiguration {
 //        });
 //        iSqlParserList.add(tenantSqlParser);
 
-        /*
-           动态表名
-         */
+        /* 动态表名 */
         DynamicTableNameParser dynamicTableNameParser = new DynamicTableNameParser();
         Map<String, ITableNameHandler> tableNameHandlerMap = new HashMap<>();
         tableNameHandlerMap.put("user", (metaObject, sql, tableName) -> myTableName.get());
         dynamicTableNameParser.setTableNameHandlerMap(tableNameHandlerMap);
         iSqlParserList.add(dynamicTableNameParser);
+
+        /* 攻击 SQL 阻断解析器 */
+        iSqlParserList.add(new BlockAttackSqlParser() {
+            // 可以选择是否重写父类方法
+            @Override
+            public void processDelete(Delete delete) {
+                if ("role".equals(delete.getTable().getName())) {
+                    return;
+                }
+                super.processDelete(delete);
+            }
+        });
 
         paginationInterceptor.setSqlParserList(iSqlParserList);
         paginationInterceptor.setSqlParserFilter(metaObject -> {

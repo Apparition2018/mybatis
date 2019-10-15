@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc.dao.IMessage">
+    <!-- typeHandlers：类型处理器
+        https://www.cnblogs.com/hellowhy/p/9670635.html -->
+    <resultMap type="com.imooc.bean.Message" id="MessageResult">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="COMMAND" property="command" jdbcType="VARCHAR"/>
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR"/>
+        <result column="CONTENT" property="content" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="columns">ID, COMMAND, DESCRIPTION, CONTENT</sql>
+
+    <!--
+        OGNL 表达式可以直接调用 java 方法，如下：equals(), trim()
+        OGNL 表达式 html 转义字符，如下：&quot; 表示 ";
+        <where> 会默认去掉第一个 and
+     -->
+    <select id="queryMessageList" parameterType="java.util.Map" resultMap="MessageResult">
+        SELECT
+        <include refid="columns"/>
+        FROM MESSAGE
+        <where>
+            <if test="message.command != null and !&quot;&quot;.equals(message.command.trim())">
+                and COMMAND = #{message.command}
+            </if>
+            <if test="message.description != null and !&quot;&quot;.equals(message.description.trim())">
+                and DESCRIPTION like '%' + #{message.description} + '%'
+            </if>
+        </where>
+        order by ID limit #{page.dbIndex}, #{page.dbNumber}
+    </select>
+    <!--
+        mysql       order by ID limit #{page.dbIndex}, #{page.dbNumber}
+        sqlserver   order by ID offset #{page.dbIndex} rows fetch next #{page.dbNumber} rows only
+    -->
+
+
+    <select id="queryMessageListByPage" parameterType="java.util.Map" resultMap="MessageResult">
+        SELECT
+        <include refid="columns"/>
+        FROM MESSAGE
+        <where>
+            <if test="message.command != null and !&quot;&quot;.equals(message.command.trim())">
+                AND COMMAND = #{message.command}
+            </if>
+            <if test="message.description != null and !&quot;&quot;.equals(message.description.trim())">
+                AND DESCRIPTION LIKE '%' #{message.description} '%'
+            </if>
+        </where>
+        ORDER BY ID
+    </select>
+
+    <select id="count" parameterType="com.imooc.bean.Message" resultType="int">
+        SELECT COUNT(1) FROM MESSAGE
+        <where>
+            <if test="command != null and !&quot;&quot;.equals(command.trim())">
+                AND COMMAND = #{command}
+            </if>
+            <if test="description != null and !&quot;&quot;.equals(description.trim())">
+                AND DESCRIPTION LIKE '%' + #{description} + '%'
+            </if>
+        </where>
+    </select>
+
+    <!--
+        <trim>  如果标签内有内容，则在前面添加 prefix 的内容，后面添加 suffix 的内容，
+                切掉前面 prefixOverrides 的内容，后面 suffixOverrides 的内容；
+        <where> 可以这样代替：<trim prefix="where" prefixOverrides="and|or">
+        <set>   可以这样代替：<trim prefix="set" suffixOverrides=",">
+    -->
+    <insert id="insertMessage" parameterType="com.imooc.bean.Message">
+        INSERT INTO MESSAGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ID != null">ID,</if>
+            <if test="COMMAND != null">COMMAND,</if>
+            <if test="DESCRIPTION != null">DESCRIPTION,</if>
+            <if test="CONTENT != null">CONTENT,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ID != null">#{id},</if>
+            <if test="COMMAND != null">#{command},</if>
+            <if test="DESCRIPTION != null">#{description},</if>
+            <if test="CONTENT != null">#{content},</if>
+        </trim>
+    </insert>
+
+    <!-- <set> 会默认去掉最后一个 , -->
+    <update id="updateMessage">
+        UPDATE MESSAGE
+        <set>
+            <if test="command != null">
+                COMMAND = #{command},
+            </if>
+            <if test="description != null">
+                DESCRIPTION = #{description},
+            </if>
+        </set>
+    </update>
+
+    <!--
+        其它常用标签：
+        <choose>
+            <when test="...">...</when>
+            <when test="...">...</when>
+            <otherwise>...</otherwise>
+        </choose>
+    -->
+
+    <delete id="deleteOne" parameterType="int">
+        DELETE FROM MESSAGE WHERE ID = #{_parameter}
+    </delete>
+
+    <delete id="deleteBatch" parameterType="java.util.List">
+        DELETE FROM MESSAGE WHERE ID IN
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

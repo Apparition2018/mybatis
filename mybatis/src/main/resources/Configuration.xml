@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 配置数据源信息 -->
+    <properties resource="jdbc.properties"/>
+
+    <!--<settings>-->
+    <!--<setting name="useGeneratedKeys" value="false"/>-->
+    <!--<setting name="useColumnLabel" value="true"/>-->
+    <!--</settings>-->
+
+    <!--
+        类型别名只是Java类型的别名，它可以有效减少Xml配置文件中映射查询语句里
+        返回类型(resultType)为自定义实体类的完全限定名冗余
+    -->
+    <!--<typeAliases>-->
+    <!--<typeAlias alias="narCode" type="com.test.model.NarCode"/>-->
+    <!--</typeAliases>-->
+
+    <plugins>
+        <!-- 注册自定义拦截器 -->
+        <plugin interceptor="com.imooc.interceptor.PageInterceptor">
+            <property name="test" value="abc"/>
+        </plugin>
+    </plugins>
+
+    <!--
+         获取数据库连接实例的数据源（DataSource）和决定事务作用域和控制方式的事务管理器（TransactionManager）
+     -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 程序中所用到sql映射文件都在这里列出，这些映射sql都被Mybatis管理 -->
+    <mappers>
+        <mapper resource="mapper/Message.xml"/>
+        <mapper resource="mapper/Command.xml"/>
+        <mapper resource="mapper/CommandContent.xml"/>
+    </mappers>
+</configuration>

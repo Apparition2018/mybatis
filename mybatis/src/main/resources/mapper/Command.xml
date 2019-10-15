@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Command">
+    <!-- <collection> 一对多
+        https://www.cnblogs.com/yuan951/p/7594176.html -->
+    <resultMap type="com.imooc.bean.Command" id="Command">
+        <id column="C_ID" jdbcType="INTEGER" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <collection property="contentList" resultMap="CommandContent.Content"/>
+    </resultMap>
+
+    <select id="queryCommandList" parameterType="com.imooc.bean.Command" resultMap="Command">
+        SELECT a.ID C_ID, a.NAME, a.DESCRIPTION, b.ID, b.CONTENT, b.COMMAND_ID
+        FROM COMMAND a
+        LEFT JOIN COMMAND_CONTENT b
+        ON a.ID = b.COMMAND_ID
+        <where>
+            <if test="name != null and !&quot;&quot;.equals(name.trim())">
+                AND a.NAME = #{name}
+            </if>
+            <if test="description != null and !&quot;&quot;.equals(description.trim())">
+                AND a.DESCRIPTION LIKE '%' + #{description} + '%'
+            </if>
+        </where>
+    </select>
+
+    <!--
+        useGeneratedKeys: 自增主键
+        keyProperty: 自增主键赋值给指定属性，通过 getter 方法可以获取
+        https://bugyun.iteye.com/blog/2286145
+    -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.imooc.bean.Command">
+        INSERT INTO COMMAND (NAME, DESCRIPTION) VALUES (#{name}, #{description})
+    </insert>
+</mapper>

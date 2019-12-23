@@ -28,9 +28,9 @@
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>DeleteBatchServlet</servlet-name>
-    <servlet-class>com.imooc.servlet.DeleteBatchServlet</servlet-class>
-</servlet>
+        <servlet-name>DeleteBatchServlet</servlet-name>
+        <servlet-class>com.imooc.servlet.DeleteBatchServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DeleteBatchServlet</servlet-name>
         <url-pattern>/DeleteBatchServlet.action</url-pattern>

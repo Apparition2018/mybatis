@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
     <groupId>com.ljh</groupId>
-    <artifactId>mybatis</artifactId>
+    <artifactId>mybatis-parent</artifactId>
 	<packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 

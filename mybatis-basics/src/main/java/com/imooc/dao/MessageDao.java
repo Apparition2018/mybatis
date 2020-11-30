@@ -25,9 +25,7 @@ public class MessageDao {
     public List<Message> queryMessageList(Map<String, Object> parameter) {
         DBAccess dbAccess = new DBAccess();
         List<Message> messageList = new ArrayList<>();
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = dbAccess.getSqlSession();
+        try (SqlSession sqlSession = dbAccess.getSqlSession()) {
             // 通过 sqlSession 执行 SQL 语句
             // messageList = sqlSession.selectList("Message.queryMessageList", parameter);
             // 接口式编程 (mybatis-spring)， 上面一行替换成下面两行代码
@@ -36,10 +34,6 @@ public class MessageDao {
             messageList = mapper.queryMessageList(parameter);
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
         }
         return messageList;
     }
@@ -50,18 +44,12 @@ public class MessageDao {
     public List<Message> queryMessageListByPage(Map<String, Object> parameter) {
         DBAccess dbAccess = new DBAccess();
         List<Message> messageList = new ArrayList<>();
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = dbAccess.getSqlSession();
+        try (SqlSession sqlSession = dbAccess.getSqlSession()) {
             // 通过sqlSession执行SQL语句
             IMessage imessage = sqlSession.getMapper(IMessage.class);
             messageList = imessage.queryMessageListByPage(parameter);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
         }
         return messageList;
     }
@@ -71,19 +59,13 @@ public class MessageDao {
      */
     public int count(Message message) {
         DBAccess dbAccess = new DBAccess();
-        SqlSession sqlSession = null;
         int result = 0;
-        try {
-            sqlSession = dbAccess.getSqlSession();
+        try (SqlSession sqlSession = dbAccess.getSqlSession()) {
             // 通过sqlSession执行SQL语句
             IMessage imessage = sqlSession.getMapper(IMessage.class);
             result = imessage.count(message);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
         }
         return result;
     }
@@ -93,18 +75,12 @@ public class MessageDao {
      */
     public void deleteOne(int id) {
         DBAccess dbAccess = new DBAccess();
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = dbAccess.getSqlSession();
+        try (SqlSession sqlSession = dbAccess.getSqlSession()) {
             // 通过 sqlSession 执行 SQL 语句
             sqlSession.delete("Message.deleteOne", id);
             sqlSession.commit();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
         }
     }
 
@@ -113,18 +89,12 @@ public class MessageDao {
      */
     public void deleteBatch(List<Integer> id) {
         DBAccess dbAccess = new DBAccess();
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = dbAccess.getSqlSession();
+        try (SqlSession sqlSession = dbAccess.getSqlSession()) {
             // 通过 sqlSession 执行 SQL 语句
             sqlSession.delete("Message.deleteBatch", id);
             sqlSession.commit();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
         }
     }
 

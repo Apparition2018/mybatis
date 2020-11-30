@@ -48,19 +48,13 @@ public class CommandContentDao {
      */
     public void insertBatch(List<CommandContent> contentList) {
         DBAccess dbAccess = new DBAccess();
-        SqlSession sqlSession = null;
-        try {
-            sqlSession = dbAccess.getSqlSession();
+        try (SqlSession sqlSession = dbAccess.getSqlSession()) {
             // 通过sqlSession执行SQL语句
             ICommandContent commandContent = sqlSession.getMapper(ICommandContent.class);
             commandContent.insertBatch(contentList);
             sqlSession.commit();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (sqlSession != null) {
-                sqlSession.close();
-            }
         }
     }
 }

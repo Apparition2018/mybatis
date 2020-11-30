@@ -2,7 +2,6 @@ package com.ljh.mp.dao;
 
 import com.baomidou.mybatisplus.annotation.SqlParser;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.ljh.mp.entity.User;
 import org.apache.ibatis.annotations.Param;

@@ -20,7 +20,7 @@ public class MaintainService {
      */
     public void deleteOne(String id) {
         if (id != null && !"".equalsIgnoreCase(id.trim())) {
-            new MessageDao().deleteOne(Integer.valueOf(id));
+            new MessageDao().deleteOne(Integer.parseInt(id));
         }
     }
 

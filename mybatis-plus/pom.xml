@@ -8,7 +8,22 @@
         <artifactId>mybatis</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>mybatis-plus-basics</artifactId>
+    <artifactId>mybatis-plus</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>mybatis-plus-basics</module>
+        <module>mybatis-plus-advance</module>
+        <module>mybatis-plus-generator</module>
+    </modules>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${baomidou.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

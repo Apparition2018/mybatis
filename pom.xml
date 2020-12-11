@@ -16,14 +16,13 @@
 
     <modules>
         <module>mybatis-basics</module>
-		<module>mybatis-plus-basics</module>
-		<module>mybatis-plus-advance</module>
-		<module>mybatis-plus-generator</module>
+        <module>mybatis-plus</module>
+        <module>tk.mybatis</module>
     </modules>
 
     <properties>
         <spring.boot.version>2.3.5.RELEASE</spring.boot.version>
-        <com.baomidou.version>3.4.0</com.baomidou.version>
+        <baomidou.version>3.4.0</baomidou.version>
         <jackson.version>2.11.3</jackson.version>
         <p6spy.version>3.9.1</p6spy.version>
         <velocity-engine-core.version>2.2</velocity-engine-core.version>
@@ -46,11 +45,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${com.baomidou.version}</version>
         </dependency>
 
         <dependency>

@@ -17,7 +17,6 @@
     <modules>
         <module>mybatis-basics</module>
         <module>mybatis-plus</module>
-        <module>tk.mybatis</module>
     </modules>
 
     <properties>

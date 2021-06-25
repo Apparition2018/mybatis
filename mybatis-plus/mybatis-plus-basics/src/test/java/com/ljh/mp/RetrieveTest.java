@@ -3,24 +3,21 @@ package com.ljh.mp;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
 import com.ljh.mp.dao.UserMapper;
 import com.ljh.mp.entity.User;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class RetrieveTest {
 
@@ -334,10 +331,10 @@ public class RetrieveTest {
 
         Page<User> page = new Page<>(1, 2, false); // false表示不查总记录数
 
-        IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
+        IPage<User> iPage = userMapper.selectPage(page, queryWrapper);
         System.out.println("总页数" + iPage.getPages());
         System.out.println("总记录数" + iPage.getTotal());
-        List<Map<String, Object>> userList = iPage.getRecords();
+        List<User> userList = iPage.getRecords();
         userList.forEach(System.out::println);
     }
 

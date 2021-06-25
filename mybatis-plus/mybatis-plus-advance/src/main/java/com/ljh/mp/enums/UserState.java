@@ -1,6 +1,5 @@
 package com.ljh.mp.enums;
 
-import com.ljh.mp.enums.interface2.IBaseEnum;
 import lombok.Getter;
 
 @Getter

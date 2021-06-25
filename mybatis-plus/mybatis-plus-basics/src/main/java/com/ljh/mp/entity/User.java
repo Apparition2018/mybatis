@@ -22,7 +22,7 @@ public class User extends Model<User> {
 //    @TableId(type = IdType.NONE)
 //    @TableId(type = IdType.ID_WORKER);        // 雪花算法id
 //    @TableId(type = IdType.UUID)
-    @TableId(type = IdType.ID_WORKER_STR)
+    @TableId(type = IdType.ASSIGN_UUID)
     private String id;
     // 姓名
     @TableField(condition = SqlCondition.LIKE)  // RetrieveTest: selectList12() 中name字段默认变成了like查询

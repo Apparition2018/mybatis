@@ -2,9 +2,9 @@ package com.ljh.mp.injector;
 
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
-import com.baomidou.mybatisplus.extension.injector.methods.additional.AlwaysUpdateSomeColumnById;
-import com.baomidou.mybatisplus.extension.injector.methods.additional.InsertBatchSomeColumn;
-import com.baomidou.mybatisplus.extension.injector.methods.additional.LogicDeleteByIdWithFill;
+import com.baomidou.mybatisplus.extension.injector.methods.AlwaysUpdateSomeColumnById;
+import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
+import com.baomidou.mybatisplus.extension.injector.methods.LogicDeleteByIdWithFill;
 import com.ljh.mp.method.MyDeleteAllMethod;
 import org.springframework.stereotype.Component;
 

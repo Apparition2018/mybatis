@@ -1,6 +1,6 @@
 package com.ljh.mp.enums;
 
-import com.baomidou.mybatisplus.core.enums.IEnum;
+import com.baomidou.mybatisplus.annotation.IEnum;
 import lombok.Getter;
 
 @Getter

@@ -16,8 +16,6 @@ import java.util.Scanner;
 
 /**
  * 代码生成器：https://mp.baomidou.com/guide/generator.html
- *
- * https://www.cnblogs.com/ahhyong/p/10511566.html
  */
 public class MySqlGenerator {
 

@@ -1,7 +1,7 @@
 package com.ljh.mp;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.ljh.mp.config.MybatisPlusConfiguration;
+import com.ljh.mp.config.MybatisPlusConfig;
 import com.ljh.mp.dao.UserMapper;
 import com.ljh.mp.entity.User;
 import org.junit.Test;
@@ -32,7 +32,7 @@ public class LogicDeleteTest {
      */
     @Test
     public void selectList() {
-        MybatisPlusConfiguration.myTableName.set("user_2019");
+        MybatisPlusConfig.myTableName.set("user_2019");
 
         List<User> list = userMapper.selectList(null);
         list.forEach(System.out::println);
@@ -59,7 +59,7 @@ public class LogicDeleteTest {
      */
     @Test
     public void mySelectList() {
-        MybatisPlusConfiguration.myTableName.set("user_2019");
+        MybatisPlusConfig.myTableName.set("user_2019");
 
         List<User> list = userMapper.mySelectList(Wrappers.<User> lambdaQuery().gt(User::getAge, 25));
         list.forEach(System.out::println);
@@ -67,7 +67,7 @@ public class LogicDeleteTest {
 
     @Test
     public void selectById() {
-        MybatisPlusConfiguration.myTableName.set("user_2019");
+        MybatisPlusConfig.myTableName.set("user_2019");
 
         User user = userMapper.selectById(1087982257332887553L);
         System.out.println("user = " + user);

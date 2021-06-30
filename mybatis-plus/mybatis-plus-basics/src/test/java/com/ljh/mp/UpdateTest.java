@@ -26,8 +26,11 @@ public class UpdateTest {
         System.out.println("影响记录数：" + rows);
     }
 
+    /**
+     * UPDATE user SET age=?, email=? WHERE (name = ? AND age = ?)
+     */
     @Test
-    public void update() {
+    public void updateWrapper1() {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("name", "李艺伟").eq("age", 28);
 
@@ -39,8 +42,11 @@ public class UpdateTest {
         System.out.println("影响记录数：" + rows);
     }
 
+    /**
+     * UPDATE user SET age=?, email=? WHERE name LIKE CONCAT('%',?,'%') AND (age = ?)
+     */
     @Test
-    public void update2() {
+    public void updateWrapper2() {
         User whereUser = new User();
         whereUser.setName("李艺伟");
 
@@ -55,8 +61,11 @@ public class UpdateTest {
         System.out.println("影响记录数：" + rows);
     }
 
+    /**
+     * UPDATE user SET age=? WHERE (name = ? AND age = ?)
+     */
     @Test
-    public void update3() {
+    public void updateWrapper3() {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("name", "李艺伟").eq("age", 29).set("age", 30);
 
@@ -65,10 +74,10 @@ public class UpdateTest {
     }
 
     /**
-     * 根据lambda构造器更新
+     * UPDATE user SET age=? WHERE (name = ? AND age = ?)
      */
     @Test
-    public void update4() {
+    public void lambda() {
         LambdaUpdateWrapper<User> lambdaUpdate = Wrappers.lambdaUpdate();
         lambdaUpdate.eq(User::getName, "李艺伟").eq(User::getAge, 30).set(User::getAge, 31);
 
@@ -76,6 +85,9 @@ public class UpdateTest {
         System.out.println("影响记录数：" + rows);
     }
 
+    /**
+     * UPDATE user SET age=? WHERE (name = ? AND age = ?)
+     */
     @Test
     public void lambdaQueryChainWrapper() {
         boolean update = new LambdaUpdateChainWrapper<>(userMapper)

@@ -5,14 +5,11 @@ import com.ljh.mp.config.MybatisPlusConfig;
 import com.ljh.mp.dao.UserMapper;
 import com.ljh.mp.entity.User;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class LogicDeleteTest {
 
@@ -27,8 +24,8 @@ public class LogicDeleteTest {
 
     /**
      * 如果已配置了逻辑删除，默认只会查询出未逻辑删除的数据（自定义语句无效）
-     *      1)mybatis-plus.global-config.db-config.logic-not-delete-value
-     *      2)mybatis-plus.global-config.db-config.logic-delete-value
+     * 1)mybatis-plus.global-config.db-config.logic-not-delete-value
+     * 2)mybatis-plus.global-config.db-config.logic-delete-value
      */
     @Test
     public void selectList() {
@@ -61,7 +58,7 @@ public class LogicDeleteTest {
     public void mySelectList() {
         MybatisPlusConfig.myTableName.set("user_2019");
 
-        List<User> list = userMapper.mySelectList(Wrappers.<User> lambdaQuery().gt(User::getAge, 25));
+        List<User> list = userMapper.mySelectList(Wrappers.<User>lambdaQuery().gt(User::getAge, 25));
         list.forEach(System.out::println);
     }
 

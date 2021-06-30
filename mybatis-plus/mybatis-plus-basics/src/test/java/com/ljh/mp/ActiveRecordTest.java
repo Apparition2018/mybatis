@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 
 @SpringBootTest
-public class ARTest {
+public class ActiveRecordTest {
 
     @Test
     public void insert() {

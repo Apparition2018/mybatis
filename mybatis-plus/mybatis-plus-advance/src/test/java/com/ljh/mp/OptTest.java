@@ -4,22 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.ljh.mp.dao.UserMapper;
 import com.ljh.mp.entity.User;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * 乐观锁插件测试类
- *
+ * <p>
  * 支持类型：int, Integer, long, Long, Date, Timestamp, LocalDateTime
  * 整数类型下 newVersion = oldVersion + 1
- *  newVersion 会回写到 entity 中
+ * newVersion 会回写到 entity 中
  * 仅支持 updateById(id) 与 update(entity, wrapper)
  * 在 update(entity, wrapper) 下，wrapper 不能复用!!!
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class OptTest {
 

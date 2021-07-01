@@ -40,7 +40,7 @@ public class DeleteTest {
     }
 
     @Test
-    public void lambda() {
+    public void deleteByLambdaQueryWrapper() {
         LambdaQueryWrapper<User> lambdaQuery = Wrappers.lambdaQuery();
         lambdaQuery.eq(User::getAge, 27).or().gt(User::getAge, 41);
         int rows = userMapper.delete(lambdaQuery);

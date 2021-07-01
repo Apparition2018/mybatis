@@ -19,7 +19,7 @@ public class UpdateTest {
     @Test
     public void updateByIds() {
         User user = new User();
-//        user.setId(1088248166370832385L);
+        user.setId("1088248166370832385");
         user.setAge(26);
         user.setEmail("wtf2@baomidou.com");
         int rows = userMapper.updateById(user);
@@ -27,10 +27,10 @@ public class UpdateTest {
     }
 
     /**
-     * UPDATE user SET age=?, email=? WHERE (name = ? AND age = ?)
+     * UPDATE user SET age=29, email='lyw2019@baomidou.com' WHERE (name = '李艺伟' AND age = 28)
      */
     @Test
-    public void updateWrapper1() {
+    public void updateSetEntityByWrapper() {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("name", "李艺伟").eq("age", 28);
 
@@ -43,10 +43,10 @@ public class UpdateTest {
     }
 
     /**
-     * UPDATE user SET age=?, email=? WHERE name LIKE CONCAT('%',?,'%') AND (age = ?)
+     * UPDATE user SET age=29, email='lyw2019@baomidou.com' WHERE name LIKE CONCAT('%','李艺伟','%') AND (age = 28)
      */
     @Test
-    public void updateWrapper2() {
+    public void updateSetEntityByWrapper2() {
         User whereUser = new User();
         whereUser.setName("李艺伟");
 
@@ -62,10 +62,10 @@ public class UpdateTest {
     }
 
     /**
-     * UPDATE user SET age=? WHERE (name = ? AND age = ?)
+     * UPDATE user SET age=30 WHERE (name = '李艺伟' AND age = 29)
      */
     @Test
-    public void updateWrapper3() {
+    public void updateSetEntityByWrapper3() {
         UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
         updateWrapper.eq("name", "李艺伟").eq("age", 29).set("age", 30);
 
@@ -74,10 +74,10 @@ public class UpdateTest {
     }
 
     /**
-     * UPDATE user SET age=? WHERE (name = ? AND age = ?)
+     * UPDATE user SET age=31 WHERE (name = '李艺伟'  AND age = 30)
      */
     @Test
-    public void lambda() {
+    public void updateSetEntityByLambdaUpdateWrapper() {
         LambdaUpdateWrapper<User> lambdaUpdate = Wrappers.lambdaUpdate();
         lambdaUpdate.eq(User::getName, "李艺伟").eq(User::getAge, 30).set(User::getAge, 31);
 
@@ -86,10 +86,10 @@ public class UpdateTest {
     }
 
     /**
-     * UPDATE user SET age=? WHERE (name = ? AND age = ?)
+     * UPDATE user SET age=32 WHERE (name = '李艺伟' AND age = 31)
      */
     @Test
-    public void lambdaQueryChainWrapper() {
+    public void chainUpdate() {
         boolean update = new LambdaUpdateChainWrapper<>(userMapper)
                 .eq(User::getName, "李艺伟").eq(User::getAge, 31).set(User::getAge, 32).update();
         System.out.println("是否更新成功：" + update);

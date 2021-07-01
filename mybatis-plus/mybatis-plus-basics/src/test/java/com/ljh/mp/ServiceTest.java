@@ -18,7 +18,8 @@ public class ServiceTest {
 
     @Test
     public void getOne() {
-        User user = userService.getOne(Wrappers.<User>lambdaQuery().gt(User::getAge, 25), false); // false 表示当结果多余一个时，是否报错
+        // false 表示当结果多余一个时，是否报错
+        User user = userService.getOne(Wrappers.<User>lambdaQuery().gt(User::getAge, 25), false);
         System.out.println("user = " + user);
     }
 

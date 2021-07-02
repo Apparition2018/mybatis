@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `user`;
 -- 创建用户表
 CREATE TABLE user (
     id BIGINT(20) PRIMARY KEY NOT NULL COMMENT '主键',

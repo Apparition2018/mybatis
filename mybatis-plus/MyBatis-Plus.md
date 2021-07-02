@@ -34,13 +34,19 @@ mybatis-plus:
       update-strategy: default
       # 表名前缀
       # table-prefix: mp_
+      # 逻辑未删除值
+      # logic-not-delete-value: 0
+      # 逻辑已删除值
+      # logic-delete-value: 1
   # MyBatis 配置文件位置
   # config-location: classpath:mybatis-config.xml
   # MyBaits 别名包扫描路径
-  typeAliasesPackage: com.ljh.mp.entity
+  type-aliases-package: com.ljh.mp.entity
   configuration:
     # 是否开启自动驼峰命名规则（camel case）映射，默认为true，不能和 config-location 同时出现
-    mapUnderscoreToCamelCase: true
+    map-underscore-to-camel-case: true
+  # 枚举类扫描路径；支持统配符 * 或者 ; 分割
+  # type-enums-package: com.ljh.mp.enums
 ```
 ---
 ## 快速使用
@@ -70,7 +76,7 @@ public class User {
     private Long userId;
 }
 ```
-3. @TableField
+3. [@TableField](https://mp.baomidou.com/guide/annotation.html#tablefield)
 ```java
 public class User {
     // 使 realName 对应表字段 name
@@ -85,6 +91,15 @@ public class User {
     // 不为 null 才加入 INSERT SQL
     @TableField(insertStrategy = FieldStrategy.NOT_NULL)
     private String email;
+    // 查询的时候不显示该字段（自定义语句无效）
+    @TableField(select = false)
+    private Integer deleted;
+    // 插入时填充字段
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+    // 插入和更新时填充字段
+    @TableField(fill = FieldFill.UPDATE)
+    private LocalDateTime updateTime;
 }
 ```
 4. @OrderBy
@@ -95,8 +110,38 @@ public class User {
     private LocalDateTime createTime;
 }
 ```
+5. @TableLogic
+```java
+public class User {
+    // 逻辑删除
+    @TableLogic
+    private Integer deleted;
+}
+```
+6. @Version
+```java
+public class User {
+    // 乐观锁注解
+    @Version
+    private Integer version;
+}
+```
+7. @InterceptorIgnore
+```java
+public interface UserMapper extends BaseMapper<User> {
+    // 拦截忽略：
+    // tenantLine       行级租户
+    // dynamicTableName 动态表名
+    // blockAttack      攻击 SQL 阻断解析器,防止全表更新与删除
+    // illegalSql       垃圾SQL拦截
+    // sharding         分表
+    // ......
+    @InterceptorIgnore(tenantLine = "true")
+    List<User> mySelectList(@Param(Constants.WRAPPER) Wrapper<User> wrapper);
+}
+```
 ---
-## 条件构造器
+## [条件构造器](https://mp.baomidou.com/guide/wrapper.html)
 1. [AbstractWrapper](https://mp.baomidou.com/guide/wrapper.html#abstractwrapper)
     - QueryWrapper(LambdaQueryWrapper) 和 UpdateWrapper(LambdaUpdateWrapper) 的父类，用于生成 WHERE 条件
 ```
@@ -123,16 +168,16 @@ set()                                  SQL SET 字段
 setSql()                               设置 SET 部分 SQL
 ```
 ---
-## 分页查询
-1. MyBatisPlusConfig
+## [分页查询](https://mp.baomidou.com/guide/page.html)
+1. MybatisPlusInterceptor
 ```java
 @Configuration
 public class MyBatisPlusConfig {
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
-        mybatisPlusInterceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
-        return mybatisPlusInterceptor;
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
+        return interceptor;
     }
 }
 ```
@@ -156,6 +201,274 @@ IPage<Map<String, Object>> selectUserPage(Page<User> page, @Param(Constants.WRAP
    ${ew.customSqlSegment}
 </select>
 ```
+---
+## [逻辑删除](https://mp.baomidou.com/guide/logic-delete.html)
+1. application.yml 配置
+```yaml
+mybatis-plus:
+  global-config:
+    db-config:
+      # 全局逻辑删除字段
+      # logic-delete-field: deleted
+      # 逻辑未删除值
+      logic-not-delete-value: 0
+      # 逻辑已删除值
+      logic-delete-value: 1
+```
+2. @TableLogic
+```
+@TableLogic
+private Integer deleted;
+```
+---
+## [自动填充](https://mp.baomidou.com/guide/auto-fill-metainfo.html)
+1. 自定义实现 MetaObjectHandler
+```java
+@Component
+public class MyMetaObjectHandler implements MetaObjectHandler {
+    @Override
+    public void insertFill(MetaObject metaObject) {
+        boolean hasSetter = metaObject.hasSetter("createTime");
+        // 有 createTime 字段才填充
+        if (hasSetter) {
+        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
+        }
+    }
+    @Override
+    public void updateFill(MetaObject metaObject) {
+        Object val = getFieldValByName("updateTime", metaObject);
+        // updateTime 没有设置值才填充
+        if (val == null) {
+            this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
+        }
+    }
+}
+```
+2. 注解填充字段
+```java
+abstract class BaseEntity {
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.UPDATE)
+    private LocalDateTime updateTime;
+}
+```
+---
+## [乐观锁](https://mp.baomidou.com/guide/interceptor-optimistic-locker.html)
+- 当要更新一条记录的时候，希望这条记录没有被别人更新
+- 乐观锁实现方式：
+   1. 取出记录时，获取当前 version
+   2. 更新时，带上这个 version
+   3. 执行更新时，set version = newVersion where version = oldVersion
+   4. 如果 version 不对，就更新失败
+1. MybatisPlusInterceptor
+```java
+@Configuration
+public class MyBatisPlusConfig {
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        return interceptor;
+    }
+}
+```
+2. @Version
+```java
+public class User {
+    @Version
+    private Integer version;
+}
+```
+3. 使用
+```
+User user = new User();
+user.setId(1183568091535720449L);
+user.setEmail("ly2@baomidou.com");
+user.setVersion(1);
+// UPDATE user SET email='ly2@baomidou.com', version=2, WHERE id=1183568091535720449 AND version=1 AND deleted=0
+int rows = userMapper.updateById(user);
+```
+---
+## [多租户](https://mp.baomidou.com/guide/interceptor-tenant-line.html)
+1. MybatisPlusInterceptor
+```java
+@Configuration
+public class MyBatisPlusConfig {
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        // 多租户实现方式：共享数据库，共享 schema，共享数据表，一个租户一个租户 ID
+        interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(new TenantLineHandler() {
+            @Override
+            public String getTenantIdColumn() {
+                // 本例使用 manager_id 当作租户 ID
+                return "manager_id";
+            }
+            @Override
+            public Expression getTenantId() {
+                // 这里写死了租户 ID，实际需要自定义获取当前租户的租户 ID
+                return new LongValue(1088248166370832385L);
+            }
+            @Override
+            public boolean ignoreTable(String tableName) {
+                // 忽略拼接多租户条件
+                return "role".equals(tableName);
+            }
+        }));
+        return interceptor;
+    }
+}
+```
+---
+## [动态表名](https://mp.baomidou.com/guide/interceptor-dynamic-table-name.html)
+- 应用场景：数据库有一类表名相类似，比如：sys_log_20210701，sys_log_20210702，sys_log_20210703 等
+1. MybatisPlusInterceptor
+```java
+@Configuration
+public class MyBatisPlusConfig {
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
+        Map<String, TableNameHandler> tableNameHandlerMap = new HashMap<String, TableNameHandler>(2) {
+            private static final long serialVersionUID = 7009035918628703069L;
+            {
+                // 自定义替换逻辑
+                put("user", (sql, tableName) -> DynamicTableName.get() != null ? DynamicTableName.get() : tableName);
+            }
+        };
+        dynamicTableNameInnerInterceptor.setTableNameHandlerMap(tableNameHandlerMap);
+        interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
+        return interceptor;
+    }
+}
+```
+2. DynamicTableName
+```java
+public class DynamicTableName {
+    public static ThreadLocal<String> myTableName = new ThreadLocal<>();
+    public static void set(String name) {
+        myTableName.set(name);
+    }
+    public static String get() {
+        return myTableName.get();
+    }
+}
+
+```
+3. 使用
+```        
+DynamicTableName.set("user_2019");
+// SELECT id,name,age,email,manager_id,version,create_time,update_time FROM user_2019 WHERE deleted=0
+List<User> list = userMapper.selectList(null);
+```
+---
+## [SQL 注入器](https://mp.baomidou.com/guide/sql-injector.html)
+1. 创建定义方法的类
+```java
+public class DeleteAllMethod extends AbstractMethod {
+    private static final long serialVersionUID = 6166068393991215997L;
+    @Override
+    public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
+        // 执行的 SQL
+        String sql = "DELETE FROM " + tableInfo.getTableName();
+        // 方法名
+        String method = "deleteAll";
+        SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
+        return addDeleteMappedStatement(mapperClass, method, sqlSource);
+    }
+}
+```
+2. 创建注入器
+```java
+@Component
+public class MySqlInjector extends DefaultSqlInjector {
+    @Override
+    public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
+        List<AbstractMethod> methodList = super.getMethodList(mapperClass);
+        // 添加自定义方法的类
+        methodList.add(new DeleteAllMethod());
+        // mp 自带自定义方法，批量插入时自选字段
+        methodList.add(new InsertBatchSomeColumn(t -> !t.isLogicDelete()));
+        // mp 自带自定义方法，逻辑删除时填充某些字段，需要 @TableField(fill = FieldFill.UPDATE) 配合使用
+        methodList.add(new LogicDeleteByIdWithFill());
+        // mp 自带自定义方法，更新时自选字段
+        methodList.add(new AlwaysUpdateSomeColumnById(t -> !"name".equals(t.getColumn())));
+        return methodList;
+    }
+}
+
+```
+3. 在 Mapper 中加入自定义方法
+```java
+public interface MyMapper<T> extends BaseMapper<T> {
+    int deleteAll();
+    int insertBatchSomeColumn(List<T> list);
+    int deleteByIdWithFill(T entity);
+    int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
+}
+```
+---
+## [通用枚举](https://mp.baomidou.com/guide/enum.html)
+未完待续
+
+---
+## SQL 性能规范
+1. MybatisPlusInterceptor
+```java
+@Configuration
+public class MyBatisPlusConfig {
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new IllegalSQLInnerInterceptor());
+        return interceptor;
+    }
+}
+```
+2. 使用
+```
+// MybatisPlusException: 非法SQL，SQL未使用到索引, table:user, columnName:deleted
+List<User> list = userMapper.selectList(null);
+```
+---
+## 防止全表更新与删除
+1. MybatisPlusInterceptor
+```java
+@Configuration
+public class MyBatisPlusConfig {
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+        return interceptor;
+    }
+}
+```
+2. 使用
+```
+// MybatisPlusException: Prohibition of full table deletion
+int rows = userMapper.deleteAll();
+```
+---
+## [执行 SQL 分析打印](https://mp.baomidou.com/guide/p6spy.html)
+1. p6spy 依赖引入
+```
+<dependency>
+    <groupId>p6spy</groupId>
+    <artifactId>p6spy</artifactId>
+    <version>最新版本</version>
+</dependency>
+```
+2. application.yml 配置
+```yaml
+spring:
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/mp_advance?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
+```
+3. spy.properties 配置
 ---
 ## ActiveRecord 模式
 1. 实体类继承 Model

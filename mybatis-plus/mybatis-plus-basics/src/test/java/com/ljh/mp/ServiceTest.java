@@ -10,6 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 通用 Service
+ */
 @SpringBootTest
 public class ServiceTest {
 

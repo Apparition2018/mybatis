@@ -6,6 +6,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
+/**
+ * ActiveRecord 模式
+ */
 @SpringBootTest
 public class ActiveRecordTest {
 

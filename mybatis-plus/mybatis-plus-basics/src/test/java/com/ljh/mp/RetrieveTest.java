@@ -84,7 +84,7 @@ public class RetrieveTest {
 
     /**
      * 4.创建日期为2019年2月14日，且直属上级名字为王姓
-     * date_format(create_time, '%Y-%m-%d') = "2019-02-14" AND manager_id IN (SELECT id FROM user WHERE name LIKE '王%')
+     * date_format(create_time, '%Y-%m-%d') = '2019-02-14' AND manager_id IN (SELECT id FROM user WHERE name LIKE '王%')
      */
     @Test
     public void selectListByWrapper4() {

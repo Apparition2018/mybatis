@@ -6,27 +6,24 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-/**
- * 自动填充
- */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
         boolean hasSetter = metaObject.hasSetter("createTime");
-        if (hasSetter) { // 存在该字段才执行
-            System.out.println("insertFill~~");
-            setInsertFieldValByName("createTime", LocalDateTime.now(), metaObject);
+        // 有 createTime 字段才填充
+        if (hasSetter) {
+            this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
         }
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         Object val = getFieldValByName("updateTime", metaObject);
-        if (val == null) { // 没有设置值才自动填充
-            System.out.println("updateFill~~");
-            setUpdateFieldValByName("updateTime", LocalDateTime.now(), metaObject);
+        // updateTime 没有设置值才填充
+        if (val == null) {
+            this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
         }
     }
 }

@@ -43,5 +43,4 @@ public class User2 {
      */
     @TableField(exist = false)
     private String remark;
-
 }

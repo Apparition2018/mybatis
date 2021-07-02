@@ -17,9 +17,9 @@ logging:
 mybatis-plus:
   global-config:
     db-config:
-      # 逻辑删除未删除值
+      # 逻辑未删除值
       logic-not-delete-value: 0
-      # 逻辑删除已删除值
+      # 逻辑已删除值
       logic-delete-value: 1
-  # 支持统配符 * 或者 ; 分割
+  # 枚举类扫描路径；支持统配符 * 或者 ; 分割
   type-enums-package: com.ljh.mp.enums

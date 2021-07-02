@@ -1,16 +1,13 @@
 package com.ljh.mp.entity;
 
-import com.ljh.mp.enums.AgeEnum;
-import com.ljh.mp.enums.GenderEnum;
-import com.ljh.mp.enums.GradeEnum;
-import com.ljh.mp.enums.UserState;
+import com.ljh.mp.enums.*;
 import lombok.Data;
 
 /**
  * 演示枚举的使用
  */
 @Data
-public class User2 {
+public class Person {
 
     private String name;
 
@@ -33,4 +30,6 @@ public class User2 {
     private GradeEnum grade;
 
     private UserState userState;
+
+    private StrEnum strEnum;
 }

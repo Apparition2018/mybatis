@@ -50,5 +50,4 @@ public class User extends Model<User> {
      * 创建时间
      */
     private LocalDateTime createTime;
-
 }

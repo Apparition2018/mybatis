@@ -411,8 +411,26 @@ public interface MyMapper<T> extends BaseMapper<T> {
 ```
 ---
 ## [通用枚举](https://mp.baomidou.com/guide/enum.html)
-未完待续
-
+1. application.yml 配置
+```yaml
+mybatis-plus:
+  configuration:
+    # 枚举处理类
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+  # 枚举类扫描路径；支持统配符 * 或者 ; 分割
+  type-enums-package: com.ljh.mp.enums
+```
+2. 实体类
+```java
+public class Person {
+    // 1. IEnum 接口的枚举处理
+    private AgeEnum age;
+    // 2. 原生枚举：默认使用枚举值顺序：0：MALE，1：FEMALE
+    private GenderEnum gender;
+    // 3. 原生枚举：数据库的值对应 带@EnumValue 属性
+    private GradeEnum grade;
+}
+```
 ---
 ## SQL 性能规范
 1. MybatisPlusInterceptor

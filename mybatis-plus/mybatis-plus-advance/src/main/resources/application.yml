@@ -21,5 +21,8 @@ mybatis-plus:
       logic-not-delete-value: 0
       # 逻辑已删除值
       logic-delete-value: 1
+  configuration:
+    # 枚举处理类
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
   # 枚举类扫描路径；支持统配符 * 或者 ; 分割
   type-enums-package: com.ljh.mp.enums

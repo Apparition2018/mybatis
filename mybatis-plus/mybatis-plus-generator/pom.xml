@@ -14,7 +14,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>${baomidou-generator.version}</version>
+            <version>${mybatis-plus-generator.version}</version>
         </dependency>
 
         <!-- 模板引擎，mp 支持 Velocity（默认）、Freemarker、Beetl -->

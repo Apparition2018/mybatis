@@ -2,34 +2,29 @@ package com.ljh.mp.entity;
 
 import com.ljh.mp.enums.*;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 演示枚举的使用
  */
 @Data
+@Accessors(chain = true)
 public class Person {
-
+    private Long id;
     private String name;
-
     private String email;
-
     /**
-     * IEnum接口的枚举处理
+     * 1. IEnum 接口的枚举处理
      */
     private AgeEnum age;
-
     /**
-     * 原生枚举： 默认使用枚举值顺序： 0：MALE， 1：FEMALE
+     * 2. 原生枚举：默认使用枚举值顺序：0：MALE，1：FEMALE
      */
     private GenderEnum gender;
-
     /**
-     * 原生枚举（带{@link com.baomidou.mybatisplus.annotation.EnumValue}):
-     * 数据库的值对应该注解对应的属性
+     * 3. 原生枚举：数据库的值对应 带@EnumValue 属性
      */
     private GradeEnum grade;
-
     private UserState userState;
-
     private StrEnum strEnum;
 }

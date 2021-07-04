@@ -1,7 +1,6 @@
 package com.ljh.mp.enums;
 
 import com.baomidou.mybatisplus.annotation.IEnum;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,4 +13,9 @@ public enum AgeEnum implements IEnum<Integer> {
 
     private final int value;
     private final String desc;
+
+    @Override
+    public Integer getValue() {
+        return value;
+    }
 }

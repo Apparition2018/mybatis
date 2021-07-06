@@ -4,9 +4,10 @@
 ## 参考网站
 
 1. [MyBatis-Plus](https://mp.baomidou.com/guide/#%E7%89%B9%E6%80%A7)
-2. [MyBatis-Plus入门教程-慕课网](https://www.imooc.com/learn/1130)
-3. [MyBatis-Plus进阶-慕课网](https://www.imooc.com/learn/1171)
-4. [MyBatis-Plus + SpringBoot实现简单权限管理-慕课网](https://www.imooc.com/learn/1294)
+2. [https://gitee.com/baomidou/mybatis-plus-samples](baomidou/mybatis-plus-samples)
+3. [MyBatis-Plus入门教程-慕课网](https://www.imooc.com/learn/1130)
+4. [MyBatis-Plus进阶-慕课网](https://www.imooc.com/learn/1171)
+5. [MyBatis-Plus + SpringBoot实现简单权限管理-慕课网](https://www.imooc.com/learn/1294)
 ---
 ## MyBatis vs JPA
 1. Mybatis 优势：
@@ -22,7 +23,7 @@
 ```yaml
 mybatis-plus:
   # MyBatis Mapper 所对应的 XML 文件位置
-  mapper-locations: classpath*:mapper/*.xml
+  mapper-locations: classpath*:mapper/**/*.xml
   # 全局策略
   global-config:
     db-config:
@@ -45,8 +46,10 @@ mybatis-plus:
   configuration:
     # 是否开启自动驼峰命名规则（camel case）映射，默认为true，不能和 config-location 同时出现
     map-underscore-to-camel-case: true
+    # 枚举处理类
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
   # 枚举类扫描路径；支持统配符 * 或者 ; 分割
-  # type-enums-package: com.ljh.mp.enums
+  type-enums-package: com.ljh.mp.enums
 ```
 ---
 ## 快速使用
@@ -204,6 +207,15 @@ IPage<Map<String, Object>> selectUserPage(Page<User> page, @Param(Constants.WRAP
    LEFT JOIN user u2 ON u1.manager_id = u2.id
    ${ew.customSqlSegment}
 </select>
+```
+---
+## 联表查询
+1. application.yml 配置
+```yaml
+mybatis-plus:
+  global-config:
+    db-config:
+      property-format: "\"%s\""
 ```
 ---
 ## [逻辑删除](https://mp.baomidou.com/guide/logic-delete.html)

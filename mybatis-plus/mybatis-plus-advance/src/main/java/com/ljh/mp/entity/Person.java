@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
- * 演示通用枚举的使用
+ * 通用枚举
  */
 @Data
 @Accessors(chain = true)

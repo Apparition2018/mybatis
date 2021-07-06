@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mp?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+
+mybatis-plus:
+  global-config:
+    db-config:
+      # 主键全局策略
+      id-type: assign_uuid
+      # 字段验证策略
+      select-strategy: default
+      insert-strategy: default
+      update-strategy: default
+      # 表名前缀
+      # table-prefix: mp_
+  # MyBatis 配置文件位置
+  # config-location: classpath:mybatis-config.xml
+  configuration:
+    # 是否开启自动驼峰命名规则（camel case）映射，默认为true，不能和 config-location 同时出现
+    map-underscore-to-camel-case: true

@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 import java.util.List;
 
 /**
- * 演示字段类型处理器的使用
+ * 字段类型处理器
  */
 @Data
 @Accessors(chain = true)

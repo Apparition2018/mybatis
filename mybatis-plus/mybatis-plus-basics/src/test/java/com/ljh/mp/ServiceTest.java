@@ -17,12 +17,12 @@ import java.util.List;
 public class ServiceTest {
 
     @Autowired
-    private UserService userService;
+    private UserService UserService;
 
     @Test
     public void getOne() {
         // false 表示当结果多余一个时，是否报错
-        User user = userService.getOne(Wrappers.<User>lambdaQuery().gt(User::getAge, 25), false);
+        User user = UserService.getOne(Wrappers.<User>lambdaQuery().gt(User::getAge, 25), false);
         System.out.println("user = " + user);
     }
 
@@ -36,7 +36,7 @@ public class ServiceTest {
         user2.setName("徐丽2");
         user2.setAge(29);
 
-        boolean saveBatch = userService.saveBatch(Arrays.asList(user1, user2));
+        boolean saveBatch = UserService.saveBatch(Arrays.asList(user1, user2));
         System.out.println("是否保存成功：" + saveBatch);
     }
 
@@ -51,25 +51,25 @@ public class ServiceTest {
         user2.setName("徐力2");
         user2.setAge(30);
 
-        boolean saveBatch = userService.saveOrUpdateBatch(Arrays.asList(user1, user2));
+        boolean saveBatch = UserService.saveOrUpdateBatch(Arrays.asList(user1, user2));
         System.out.println("是否操作成功：" + saveBatch);
     }
 
     @Test
     public void lambdaQuery() {
-        List<User> userList = userService.lambdaQuery().gt(User::getAge, 25).like(User::getName, "雨").list();
+        List<User> userList = UserService.lambdaQuery().gt(User::getAge, 25).like(User::getName, "雨").list();
         userList.forEach(System.out::println);
     }
 
     @Test
     public void lambdaUpdate() {
-        boolean update = userService.lambdaUpdate().eq(User::getAge, 25).set(User::getAge, 26).update();
+        boolean update = UserService.lambdaUpdate().eq(User::getAge, 25).set(User::getAge, 26).update();
         System.out.println("是否更新成功：" + update);
     }
 
     @Test
     public void lambdaUpdate2() {
-        boolean remove = userService.lambdaUpdate().eq(User::getAge, 24).remove();
+        boolean remove = UserService.lambdaUpdate().eq(User::getAge, 24).remove();
         System.out.println("是否删除成功：" + remove);
     }
 

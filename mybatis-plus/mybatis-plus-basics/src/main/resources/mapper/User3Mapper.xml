@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ljh.mp.dao.User3Mapper">
+
+    <sql id="Base_Column_List">
+        u.id, u.name, u.age, u.email,
+        u.company_id as "company.id", c.name as "company.name"
+    </sql>
+
+    <select id="selectUserPage" resultType="User3">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user3 u
+        LEFT JOIN company c on u.company_id=c.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+    </select>
+</mapper>

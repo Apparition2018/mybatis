@@ -78,6 +78,7 @@ public class User {
 ```
 3. [@TableField](https://mp.baomidou.com/guide/annotation.html#tablefield)
 ```java
+@TableName(autoResultMap = true)
 public class User {
     // 使 realName 对应表字段 name
     @TableField("name")
@@ -91,6 +92,9 @@ public class User {
     // 不为 null 才加入 INSERT SQL
     @TableField(insertStrategy = FieldStrategy.NOT_NULL)
     private String email;
+    // 必须开启映射注解 @TableName(autoResultMap = true)
+    @TableField(typeHandler = WalletListTypeHandler.class)
+    private List<Wallet> wallets;
     // 查询的时候不显示该字段（自定义语句无效）
     @TableField(select = false)
     private Integer deleted;
@@ -221,6 +225,73 @@ mybatis-plus:
 private Integer deleted;
 ```
 ---
+## [通用枚举](https://mp.baomidou.com/guide/enum.html)
+1. application.yml 配置
+```yaml
+mybatis-plus:
+  configuration:
+    # 枚举处理类
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
+  # 枚举类扫描路径；支持统配符 * 或者 ; 分割
+  type-enums-package: com.ljh.mp.enums
+```
+2. 实体类
+```java
+public class Person {
+    // 1. IEnum 接口的枚举处理
+    private AgeEnum age;
+    // 2. 原生枚举：默认使用枚举值顺序：0：MALE，1：FEMALE
+    private GenderEnum gender;
+    // 3. 原生枚举：数据库的值对应 带@EnumValue 属性
+    private GradeEnum grade;
+}
+```
+---
+## [字段类型处理器](https://mp.baomidou.com/guide/typehandler.html)
+1. 设置 TypeHandler
+```java
+/**
+ * 实现 CommandLineRunner，项目启动后自动执行
+ */
+@Component
+@Order(1)
+public class MpJsonConfig implements CommandLineRunner {
+    @Override
+    public void run(String... args) throws Exception {
+        JacksonTypeHandler.setObjectMapper(new ObjectMapper());
+        GsonTypeHandler.setGson(new Gson());
+    }
+}
+```
+2. 自定义 TypeHandler
+```java
+public class WalletListTypeHandler extends JacksonTypeHandler {
+    public WalletListTypeHandler(Class<?> type) {
+        super(type);
+    }
+    @Override
+    protected Object parse(String json) {
+        try {
+            return getObjectMapper().readValue(json, new TypeReference<List<People.Wallet>>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+3. 注解
+```java
+@TableName(autoResultMap = true)
+public class People {
+    // 必须开启映射注解 @TableName(autoResultMap = true)
+    @TableField(typeHandler = WalletListTypeHandler.class)
+    private List<Wallet> wallets;
+    @TableField(typeHandler = GsonTypeHandler.class)
+    private OtherInfo otherInfo;
+}
+```
+---
 ## [自动填充](https://mp.baomidou.com/guide/auto-fill-metainfo.html)
 1. 自定义实现 MetaObjectHandler
 ```java
@@ -252,6 +323,84 @@ abstract class BaseEntity {
     @TableField(fill = FieldFill.UPDATE)
     private LocalDateTime updateTime;
 }
+```
+---
+## [SQL 注入器](https://mp.baomidou.com/guide/sql-injector.html)
+1. 创建定义方法的类
+```java
+public class DeleteAllMethod extends AbstractMethod {
+    private static final long serialVersionUID = 6166068393991215997L;
+    @Override
+    public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
+        // 执行的 SQL
+        String sql = "DELETE FROM " + tableInfo.getTableName();
+        // 方法名
+        String method = "deleteAll";
+        SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
+        return addDeleteMappedStatement(mapperClass, method, sqlSource);
+    }
+}
+```
+2. 创建注入器
+```java
+@Component
+public class MySqlInjector extends DefaultSqlInjector {
+    @Override
+    public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
+        List<AbstractMethod> methodList = super.getMethodList(mapperClass);
+        // 添加自定义方法的类
+        methodList.add(new DeleteAllMethod());
+        // mp 自带自定义方法，批量插入时自选字段
+        methodList.add(new InsertBatchSomeColumn(t -> !t.isLogicDelete()));
+        // mp 自带自定义方法，逻辑删除时填充某些字段，需要 @TableField(fill = FieldFill.UPDATE) 配合使用
+        methodList.add(new LogicDeleteByIdWithFill());
+        // mp 自带自定义方法，更新时自选字段
+        methodList.add(new AlwaysUpdateSomeColumnById(t -> !"name".equals(t.getColumn())));
+        return methodList;
+    }
+}
+
+```
+3. 在 Mapper 中加入自定义方法
+```java
+public interface MyMapper<T> extends BaseMapper<T> {
+    int deleteAll();
+    int insertBatchSomeColumn(List<T> list);
+    int deleteByIdWithFill(T entity);
+    int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
+}
+```
+---
+## [执行 SQL 分析打印](https://mp.baomidou.com/guide/p6spy.html)
+1. p6spy 依赖引入
+```
+<dependency>
+    <groupId>p6spy</groupId>
+    <artifactId>p6spy</artifactId>
+    <version>最新版本</version>
+</dependency>
+```
+2. application.yml 配置
+```yaml
+spring:
+  datasource:
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://localhost:3306/mp_advance?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
+```
+3. spy.properties 配置
+---
+## ActiveRecord 模式
+1. 实体类继承 Model
+```java
+public class User extends Model<User> { }
+```
+2. Mapper 继承 BaseMapper
+```java
+public interface UserMapper extends BaseMapper<User> { }
+```
+3. 使用
+```
+User user = new User().selectById(1);
 ```
 ---
 ## [乐观锁](https://mp.baomidou.com/guide/interceptor-optimistic-locker.html)
@@ -321,6 +470,25 @@ public class MyBatisPlusConfig {
 }
 ```
 ---
+## 防止全表更新与删除
+1. MybatisPlusInterceptor
+```java
+@Configuration
+public class MyBatisPlusConfig {
+    @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+        return interceptor;
+    }
+}
+```
+2. 使用
+```
+// MybatisPlusException: Prohibition of full table deletion
+int rows = userMapper.deleteAll();
+```
+---
 ## [动态表名](https://mp.baomidou.com/guide/interceptor-dynamic-table-name.html)
 - 应用场景：数据库有一类表名相类似，比如：sys_log_20210701，sys_log_20210702，sys_log_20210703 等
 1. MybatisPlusInterceptor
@@ -364,74 +532,6 @@ DynamicTableName.set("user_2019");
 List<User> list = userMapper.selectList(null);
 ```
 ---
-## [SQL 注入器](https://mp.baomidou.com/guide/sql-injector.html)
-1. 创建定义方法的类
-```java
-public class DeleteAllMethod extends AbstractMethod {
-    private static final long serialVersionUID = 6166068393991215997L;
-    @Override
-    public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
-        // 执行的 SQL
-        String sql = "DELETE FROM " + tableInfo.getTableName();
-        // 方法名
-        String method = "deleteAll";
-        SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
-        return addDeleteMappedStatement(mapperClass, method, sqlSource);
-    }
-}
-```
-2. 创建注入器
-```java
-@Component
-public class MySqlInjector extends DefaultSqlInjector {
-    @Override
-    public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
-        List<AbstractMethod> methodList = super.getMethodList(mapperClass);
-        // 添加自定义方法的类
-        methodList.add(new DeleteAllMethod());
-        // mp 自带自定义方法，批量插入时自选字段
-        methodList.add(new InsertBatchSomeColumn(t -> !t.isLogicDelete()));
-        // mp 自带自定义方法，逻辑删除时填充某些字段，需要 @TableField(fill = FieldFill.UPDATE) 配合使用
-        methodList.add(new LogicDeleteByIdWithFill());
-        // mp 自带自定义方法，更新时自选字段
-        methodList.add(new AlwaysUpdateSomeColumnById(t -> !"name".equals(t.getColumn())));
-        return methodList;
-    }
-}
-
-```
-3. 在 Mapper 中加入自定义方法
-```java
-public interface MyMapper<T> extends BaseMapper<T> {
-    int deleteAll();
-    int insertBatchSomeColumn(List<T> list);
-    int deleteByIdWithFill(T entity);
-    int alwaysUpdateSomeColumnById(@Param(Constants.ENTITY) T entity);
-}
-```
----
-## [通用枚举](https://mp.baomidou.com/guide/enum.html)
-1. application.yml 配置
-```yaml
-mybatis-plus:
-  configuration:
-    # 枚举处理类
-    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
-  # 枚举类扫描路径；支持统配符 * 或者 ; 分割
-  type-enums-package: com.ljh.mp.enums
-```
-2. 实体类
-```java
-public class Person {
-    // 1. IEnum 接口的枚举处理
-    private AgeEnum age;
-    // 2. 原生枚举：默认使用枚举值顺序：0：MALE，1：FEMALE
-    private GenderEnum gender;
-    // 3. 原生枚举：数据库的值对应 带@EnumValue 属性
-    private GradeEnum grade;
-}
-```
----
 ## SQL 性能规范
 1. MybatisPlusInterceptor
 ```java
@@ -449,56 +549,5 @@ public class MyBatisPlusConfig {
 ```
 // MybatisPlusException: 非法SQL，SQL未使用到索引, table:user, columnName:deleted
 List<User> list = userMapper.selectList(null);
-```
----
-## 防止全表更新与删除
-1. MybatisPlusInterceptor
-```java
-@Configuration
-public class MyBatisPlusConfig {
-    @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
-        return interceptor;
-    }
-}
-```
-2. 使用
-```
-// MybatisPlusException: Prohibition of full table deletion
-int rows = userMapper.deleteAll();
-```
----
-## [执行 SQL 分析打印](https://mp.baomidou.com/guide/p6spy.html)
-1. p6spy 依赖引入
-```
-<dependency>
-    <groupId>p6spy</groupId>
-    <artifactId>p6spy</artifactId>
-    <version>最新版本</version>
-</dependency>
-```
-2. application.yml 配置
-```yaml
-spring:
-  datasource:
-    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://localhost:3306/mp_advance?useSSL=false&serverTimezone=GMT%2B8&characterEncoding=utf-8
-```
-3. spy.properties 配置
----
-## ActiveRecord 模式
-1. 实体类继承 Model
-```java
-public class User extends Model<User> { }
-```
-2. Mapper 继承 BaseMapper
-```java
-public interface UserMapper extends BaseMapper<User> { }
-```
-3. 使用
-```
-User user = new User().selectById(1);
 ```
 ---

@@ -217,6 +217,21 @@ mybatis-plus:
     db-config:
       property-format: "\"%s\""
 ```
+2. 实体
+```java
+@TableName("user")
+public class User {
+    private Long id;
+    @TableField(value = "company_id", property = "company.id")
+    private Company company;
+    private String name;
+    @TableName("company")
+    public static class Company {
+        private Long id;
+        private String name;
+    }
+}
+```
 ---
 ## [逻辑删除](https://mp.baomidou.com/guide/logic-delete.html)
 1. application.yml 配置

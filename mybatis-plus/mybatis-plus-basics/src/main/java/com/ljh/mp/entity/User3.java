@@ -24,7 +24,6 @@ public class User3 {
     private String name;
     private Integer age;
     private String email;
-
     @Data
     @TableName("company")
     public static class Company {

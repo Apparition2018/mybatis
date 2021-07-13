@@ -275,38 +275,8 @@ public class Person {
 ```
 ---
 ## [字段类型处理器](https://mp.baomidou.com/guide/typehandler.html)
-1. 设置 TypeHandler
-```java
-/**
- * 实现 CommandLineRunner，项目启动后自动执行
- */
-@Component
-@Order(1)
-public class MpJsonConfig implements CommandLineRunner {
-    @Override
-    public void run(String... args) throws Exception {
-        JacksonTypeHandler.setObjectMapper(new ObjectMapper());
-        GsonTypeHandler.setGson(new Gson());
-    }
-}
-```
-2. 自定义 TypeHandler
-```java
-public class WalletListTypeHandler extends JacksonTypeHandler {
-    public WalletListTypeHandler(Class<?> type) {
-        super(type);
-    }
-    @Override
-    protected Object parse(String json) {
-        try {
-            return getObjectMapper().readValue(json, new TypeReference<List<People.Wallet>>() {
-            });
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-}
-```
+1. [设置 TypeHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\component\MpJsonConfig.java)
+2. [自定义 TypeHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\typehandler\WalletListTypeHandler.java)
 3. 注解
 ```java
 @TableName(autoResultMap = true)
@@ -320,28 +290,7 @@ public class People {
 ```
 ---
 ## [自动填充](https://mp.baomidou.com/guide/auto-fill-metainfo.html)
-1. 自定义实现 MetaObjectHandler
-```java
-@Component
-public class MyMetaObjectHandler implements MetaObjectHandler {
-    @Override
-    public void insertFill(MetaObject metaObject) {
-        boolean hasSetter = metaObject.hasSetter("createTime");
-        // 有 createTime 字段才填充
-        if (hasSetter) {
-        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
-        }
-    }
-    @Override
-    public void updateFill(MetaObject metaObject) {
-        Object val = getFieldValByName("updateTime", metaObject);
-        // updateTime 没有设置值才填充
-        if (val == null) {
-            this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
-        }
-    }
-}
-```
+1. [自定义实现 MetaObjectHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\component\MyMetaObjectHandler.java)
 2. 注解填充字段
 ```java
 abstract class BaseEntity {
@@ -353,41 +302,8 @@ abstract class BaseEntity {
 ```
 ---
 ## [SQL 注入器](https://mp.baomidou.com/guide/sql-injector.html)
-1. 创建定义方法的类
-```java
-public class DeleteAllMethod extends AbstractMethod {
-    private static final long serialVersionUID = 6166068393991215997L;
-    @Override
-    public MappedStatement injectMappedStatement(Class<?> mapperClass, Class<?> modelClass, TableInfo tableInfo) {
-        // 执行的 SQL
-        String sql = "DELETE FROM " + tableInfo.getTableName();
-        // 方法名
-        String method = "deleteAll";
-        SqlSource sqlSource = languageDriver.createSqlSource(configuration, sql, modelClass);
-        return addDeleteMappedStatement(mapperClass, method, sqlSource);
-    }
-}
-```
-2. 创建注入器
-```java
-@Component
-public class MySqlInjector extends DefaultSqlInjector {
-    @Override
-    public List<AbstractMethod> getMethodList(Class<?> mapperClass) {
-        List<AbstractMethod> methodList = super.getMethodList(mapperClass);
-        // 添加自定义方法的类
-        methodList.add(new DeleteAllMethod());
-        // mp 自带自定义方法，批量插入时自选字段
-        methodList.add(new InsertBatchSomeColumn(t -> !t.isLogicDelete()));
-        // mp 自带自定义方法，逻辑删除时填充某些字段，需要 @TableField(fill = FieldFill.UPDATE) 配合使用
-        methodList.add(new LogicDeleteByIdWithFill());
-        // mp 自带自定义方法，更新时自选字段
-        methodList.add(new AlwaysUpdateSomeColumnById(t -> !"name".equals(t.getColumn())));
-        return methodList;
-    }
-}
-
-```
+1. [创建定义方法的类](.\mybatis-plus-advance\src\main\java\com\ljh\mp\method\DeleteAllMethod.java)
+2. [创建注入器](.\mybatis-plus-advance\src\main\java\com\ljh\mp\injector\MySqlInjector.java)
 3. 在 Mapper 中加入自定义方法
 ```java
 public interface MyMapper<T> extends BaseMapper<T> {
@@ -539,19 +455,7 @@ public class MyBatisPlusConfig {
     }
 }
 ```
-2. DynamicTableName
-```java
-public class DynamicTableName {
-    public static ThreadLocal<String> myTableName = new ThreadLocal<>();
-    public static void set(String name) {
-        myTableName.set(name);
-    }
-    public static String get() {
-        return myTableName.get();
-    }
-}
-
-```
+2. [DynamicTableName](.\mybatis-plus-advance\src\main\java\com\ljh\mp\util\DynamicTableName.java)
 3. 使用
 ```        
 DynamicTableName.set("user_2019");

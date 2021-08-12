@@ -22,7 +22,7 @@
     <properties>
         <mybatis-plus-boot-starter.version>3.4.3.1</mybatis-plus-boot-starter.version>
         <mybatis-plus-generator.version>3.5.0</mybatis-plus-generator.version>
-        <dynamic-datasource-spring-boot-starter.verson>3.4.0</dynamic-datasource-spring-boot-starter.verson>
+        <dynamic-datasource-spring-boot-starter.verson>3.4.1</dynamic-datasource-spring-boot-starter.verson>
         <p6spy.version>3.9.1</p6spy.version>
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
     </properties>

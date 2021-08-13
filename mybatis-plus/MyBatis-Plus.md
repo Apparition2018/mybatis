@@ -4,7 +4,7 @@
 ## 参考网站
 
 1. [MyBatis-Plus](https://mp.baomidou.com/guide/#%E7%89%B9%E6%80%A7)
-2. [https://gitee.com/baomidou/mybatis-plus-samples](baomidou/mybatis-plus-samples)
+2. [https://gitee.com/baomidou/mybatis-plus-samples](https://github.com/baomidou/mybatis-plus-samples)
 3. [MyBatis-Plus入门教程-慕课网](https://www.imooc.com/learn/1130)
 4. [MyBatis-Plus进阶-慕课网](https://www.imooc.com/learn/1171)
 5. [MyBatis-Plus + SpringBoot实现简单权限管理-慕课网](https://www.imooc.com/learn/1294)

@@ -17,9 +17,11 @@
     <modules>
         <module>mybatis-basics</module>
         <module>mybatis-plus</module>
+        <module>mybatis-association</module>
     </modules>
 
     <properties>
+        <pagehelper-spring-boot-starter.version>1.3.1</pagehelper-spring-boot-starter.version>
         <mybatis-plus-boot-starter.version>3.4.3.1</mybatis-plus-boot-starter.version>
         <mybatis-plus-generator.version>3.5.0</mybatis-plus-generator.version>
         <dynamic-datasource-spring-boot-starter.verson>3.4.1</dynamic-datasource-spring-boot-starter.verson>

@@ -2,7 +2,7 @@ DELETE FROM user3;
 
 INSERT INTO user3 (id, company_id, name, age) VALUES
 (1, 1, 'James', 18),
-(2, 2,'Mary', 20),
+(2, 2, 'Mary', 20),
 (3, 1, 'John', 22);
 
 

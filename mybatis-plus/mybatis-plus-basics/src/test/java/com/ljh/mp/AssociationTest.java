@@ -29,14 +29,14 @@ public class AssociationTest {
         List<User3> userList = new ArrayList<>();
         Company company1 = new Company().setId(1L).setName("Google");
         Company company2 = new Company().setId(2L).setName("Baidu");
-        userList.add(new User3().setId(4L).setName("Patricia").setAge(18).setEmail("Patricia@baomidou.com").setCompany(company2));
-        userList.add(new User3().setId(5L).setName("Robert").setAge(20).setEmail("Robert@baomidou.com").setCompany(company1));
-        userList.add(new User3().setId(6L).setName("Linda").setAge(22).setEmail("Linda@baomidou.com").setCompany(company2));
+        userList.add(new User3().setId(4L).setName("Patricia").setAge(18).setCompany(company2));
+        userList.add(new User3().setId(5L).setName("Robert").setAge(20).setCompany(company1));
+        userList.add(new User3().setId(6L).setName("Linda").setAge(22).setCompany(company2));
         user3Service.saveBatch(userList);
         selectPage();
         update();
     }
-    
+
     private void selectPage() {
         QueryWrapper<User3> queryWrapper = new QueryWrapper<>();
         int pageSize = 3;

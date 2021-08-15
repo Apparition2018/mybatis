@@ -3,7 +3,7 @@
 <mapper namespace="com.ljh.mp.dao.User3Mapper">
 
     <sql id="Base_Column_List">
-        u.id, u.name, u.age, u.email,
+        u.id, u.name, u.age,
         u.company_id as "company.id", c.name as "company.name"
     </sql>
 

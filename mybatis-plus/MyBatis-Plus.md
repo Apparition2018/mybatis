@@ -224,12 +224,24 @@ public class User {
     @TableField(value = "company_id", property = "company.id")
     private Company company;
     private String name;
+    private Integer age;
     @TableName("company")
     public static class Company {
         private Long id;
         private String name;
     }
 }
+```
+3. Mapper.xml
+```xml
+<select id="selectUserPage" resultType="User3">
+    SELECT u.id, u.name, u.age, u.company_id as "company.id", c.name as "company.name"
+    FROM user3 u
+    LEFT JOIN company c on u.company_id=c.id
+    <where>
+        ${ew.sqlSegment}
+    </where>
+</select>
 ```
 ---
 ## [逻辑删除](https://mp.baomidou.com/guide/logic-delete.html)

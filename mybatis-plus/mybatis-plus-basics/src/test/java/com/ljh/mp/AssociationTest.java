@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ljh.mp.entity.User3;
+import com.ljh.mp.entity.User3.Company;
 import com.ljh.mp.service.User3Service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,50 +25,38 @@ public class AssociationTest {
     User3Service user3Service;
 
     @Test
-    public void selectList() {
-        user3Service.list().forEach(u -> System.out.println(u.getCompany()));
-    }
-    
-    @Test
     public void insert() {
         List<User3> userList = new ArrayList<>();
-        for (int i = 0; i < 10; ++i) {
-            User3.Company cmp = new User3.Company();
-            cmp.setId(1L);
-            User3 user = new User3();
-            user.setId(100L + i);
-            user.setCompany(cmp);
-            user.setName("Han Meimei" + i);
-            user.setEmail(user.getName() + "@baomidou.com");
-            user.setAge(18);
-            userList.add(user);
-        }
+        Company company1 = new Company().setId(1L).setName("Google");
+        Company company2 = new Company().setId(2L).setName("Baidu");
+        userList.add(new User3().setId(4L).setName("Patricia").setAge(18).setEmail("Patricia@baomidou.com").setCompany(company2));
+        userList.add(new User3().setId(5L).setName("Robert").setAge(20).setEmail("Robert@baomidou.com").setCompany(company1));
+        userList.add(new User3().setId(6L).setName("Linda").setAge(22).setEmail("Linda@baomidou.com").setCompany(company2));
         user3Service.saveBatch(userList);
-        user3Service.list().forEach(System.out::println);
         selectPage();
         update();
     }
     
     private void selectPage() {
-        QueryWrapper<User3> wrapper = new QueryWrapper<>();
-        wrapper.eq("u.company_id", 1);
+        QueryWrapper<User3> queryWrapper = new QueryWrapper<>();
         int pageSize = 3;
         IPage<User3> page = new Page<>(1, pageSize);
-        List<User3> userList = user3Service.selectUserPage(page, wrapper);
+        List<User3> userList = user3Service.selectUserPage(page, queryWrapper);
         for (int i = 1; i <= page.getPages(); i++) {
             page = new Page<>(i, pageSize);
-            userList = user3Service.selectUserPage(page, wrapper);
-            System.out.printf("======>共%d条数据,当前显示第%d页，每页%d条，共%d页=====>\n", page.getTotal(), page.getCurrent(), page.getSize(), page.getPages());
+            userList = user3Service.selectUserPage(page, queryWrapper);
+            System.out.printf("====== 共%d条数据,当前显示第%d页，每页%d条，共%d页 =====\n", page.getTotal(), page.getCurrent(), page.getSize(), page.getPages());
             userList.forEach(System.out::println);
         }
+        System.out.println();
     }
 
     private void update() {
-        System.out.println("=====开始更新=====>");
+        System.out.println("====== 开始更新 ======");
         UpdateWrapper<User3> wrapper = new UpdateWrapper<>();
         wrapper.eq("company_id", 1);
         User3 user = new User3();
-        user.setName(new Date().getTime() + "");
+        user.setAge(28);
         user3Service.update(user, wrapper);
         selectPage();
     }

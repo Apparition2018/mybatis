@@ -5,16 +5,13 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.experimental.Accessors;
 
 /**
  * 联表查询
  */
-@Setter
-@Getter
-@ToString
+@Data
+@Accessors(chain = true)
 @TableName("user3")
 public class User3 {
     @TableId(type = IdType.ASSIGN_ID)
@@ -24,7 +21,9 @@ public class User3 {
     private String name;
     private Integer age;
     private String email;
+
     @Data
+    @Accessors(chain = true)
     @TableName("company")
     public static class Company {
         private Long id;

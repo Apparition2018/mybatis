@@ -1,15 +1,13 @@
+DELETE FROM user3;
+
+INSERT INTO user3 (id, company_id, name, age, email) VALUES
+(1, 1, 'James', 18, 'James@baomidou.com'),
+(2, 2,'Mary', 20, 'Mary@baomidou.com'),
+(3, 1, 'John', 22, 'John@baomidou.com');
+
+
 DELETE FROM company;
 
 INSERT INTO company (id, name) VALUES
-(1, 'HuaWei'),
-(2, 'BYD');
-
-
-DELETE FROM user3;
-
-INSERT INTO user3 (id, company_id,name, age, email) VALUES
-(1, 1, 'Jone', 18, 'test1@baomidou.com'),
-(2, 1,'Jack', 20, 'test2@baomidou.com'),
-(3, 1, 'Tom', 28, 'test3@baomidou.com'),
-(4, 2, 'Sandy', 21, 'test4@baomidou.com'),
-(5, 2, 'Billie', 24, 'test5@baomidou.com');
+(1, 'Google'),
+(2, 'Baidu');

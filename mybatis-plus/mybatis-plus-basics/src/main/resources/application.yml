@@ -5,7 +5,8 @@ spring:
 logging:
   level:
     root: warn
-    com.ljh.mp.dao: trace
+#    com.ljh.mp.dao: trace
+    com.ljh.mp.dao: info
   pattern:
     console: '%p%m%n'
 

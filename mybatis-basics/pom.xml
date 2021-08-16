@@ -8,7 +8,7 @@
         <groupId>com.ljh</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>mybatis-association</artifactId>
+    <artifactId>mybatis-basics</artifactId>
 
     <dependencies>
         <dependency>

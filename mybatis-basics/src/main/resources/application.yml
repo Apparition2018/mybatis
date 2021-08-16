@@ -8,6 +8,15 @@ spring:
     init:
       schema-locations: classpath:sql/schema-h2.sql
       data-locations: classpath:sql/data-h2.sql
+  jackson:
+    serialization:
+      indent-output: true
 
 mybatis:
+  type-aliases-package: com.ljh.entity
   mapper-locations: classpath:mapper/*.xml
+
+pagehelper:
+  helper-dialect: h2
+  reasonable: true
+  support-methods-arguments: true

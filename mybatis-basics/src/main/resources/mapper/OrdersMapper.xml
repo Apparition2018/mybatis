@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ljh.dao.OrdersMapper">
-    <resultMap id="Orders" type="com.ljh.entity.Orders">
+    <resultMap id="Orders" type="Orders">
         <id column="orderId" property="id"/>
         <result column="user_id" property="userId"/>
         <result column="no" property="no"/>
     </resultMap>
+
+    <select id="list" resultMap="Orders">
+        select id as orderId, user_id, no from orders
+    </select>
 </mapper>

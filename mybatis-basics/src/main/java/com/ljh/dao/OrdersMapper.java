@@ -1,6 +1,9 @@
 package com.ljh.dao;
 
+import com.ljh.entity.Orders;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * OrderMapper
@@ -10,4 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface OrdersMapper {
+
+    List<Orders> list();
 }

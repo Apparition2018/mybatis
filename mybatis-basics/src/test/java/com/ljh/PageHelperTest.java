@@ -6,10 +6,15 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ljh.dao.OrdersMapper;
+import com.ljh.dao.UserMapper;
 import com.ljh.entity.Orders;
+import com.ljh.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * PageHelperTest
@@ -22,6 +27,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class PageHelperTest {
 
+    @Autowired
+    private UserMapper userMapper;
     @Autowired
     private OrdersMapper ordersMapper;
     @Autowired
@@ -42,6 +49,17 @@ public class PageHelperTest {
         /* 返回 sql 返回数据条数 */
         long count = PageHelper.count(() -> ordersMapper.list());
         System.out.println(count);
-
     }
+
+    /**
+     * 解决 pageHelper 不支持嵌套结果映射
+     */
+    @Test
+    public void test2() throws JsonProcessingException {
+        PageInfo<User> userPageInfo = PageHelper.startPage(1, 2).doSelectPageInfo(() -> userMapper.list());
+        List<User> userList = userMapper.listByIdIn(userPageInfo.getList().stream().map(User::getId).collect(Collectors.toList()));
+        userPageInfo.setList(userList);
+        System.err.println(objectMapper.writeValueAsString(userPageInfo));
+    }
+
 }

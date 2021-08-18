@@ -1,6 +1,7 @@
 package com.ljh.dao;
 
 import com.ljh.entity.User;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.List;
 public interface UserMapper {
 
     List<User> list();
+
+    List<User> listByIdIn(@Param("idList") List<Long> idList);
 }

@@ -6,7 +6,7 @@ import com.imooc.bean.Message;
 import com.imooc.dao.CommandDao;
 import com.imooc.dao.MessageDao;
 import com.imooc.entity.Page;
-import com.imooc.util.Iconst;
+import com.imooc.util.IConst;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,8 +65,8 @@ public class QueryService {
     public String queryByCommand(String command) {
         CommandDao commandDao = new CommandDao();
         List<Command> commandList;
-        // 如果指令为[帮组]，查出所有指令返回
-        if (Iconst.HELP_COMMAND.equals(command)) {
+        // 如果指令为[帮助]，查出所有指令返回
+        if (IConst.HELP_COMMAND.equals(command)) {
             commandList = commandDao.queryCommandList(null, null);
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < commandList.size(); i++) {
@@ -83,15 +83,15 @@ public class QueryService {
             // 随机返回指令对应内容
             return contentList.get(new Random().nextInt(contentList.size())).getContent();
         }
-        return Iconst.NO_MATCHING_CONTENT;
+        return IConst.NO_MATCHING_CONTENT;
     }
 
 //    public String queryByCommand(String command) {
 //        MessageDao messageDao = new MessageDao();
 //        List<Message> messageList;
-//        // 如果指令为[帮组]，查出所有指令返回
-//        if (Iconst.HELP_COMMAND.equals(command)) {
-//            messageList = messageDao.queryMessageList(null, null);
+//        // 如果指令为[帮助]，查出所有指令返回
+//        if (IConst.HELP_COMMAND.equals(command)) {
+//            messageList = messageDao.queryMessageList(null);
 //            StringBuilder result = new StringBuilder();
 //            for (int i = 0; i < messageList.size(); i++) {
 //                if (i != 0) {
@@ -101,10 +101,12 @@ public class QueryService {
 //            }
 //            return result.toString();
 //        }
-//        messageList = messageDao.queryMessageList(command, null);
+//        Map<String, Object> parameter = new HashMap<>();
+//        parameter.put("command", command);
+//        messageList = messageDao.queryMessageList(parameter);
 //        if (messageList.size() > 0) {
 //            return messageList.get(0).getContent();
 //        }
-//        return Iconst.NO_MATCHING_CONTENT;
+//        return IConst.NO_MATCHING_CONTENT;
 //    }
 }

@@ -11,11 +11,11 @@
     </resultMap>
 
     <insert id="insertOne" parameterType="com.imooc.bean.CommandContent">
-        INSERT INTO COMMAND_CONTENT(CONTENT,COMMAND_ID) VALUES(#{content}, #{commandId})
+        INSERT INTO command_content(CONTENT,COMMAND_ID) VALUES(#{content}, #{commandId})
     </insert>
 
     <insert id="insertBatch" parameterType="java.util.List">
-        INSERT INTO COMMAND_CONTENT(CONTENT,COMMAND_ID) VALUES
+        INSERT INTO command_content(CONTENT,COMMAND_ID) VALUES
         <foreach collection="list" item="item" separator=",">
             (#{item.content}, #{item.commandId})
         </foreach>

@@ -30,7 +30,7 @@ public class CommandContentDao {
 //            Connection conn = DriverManager.getConnection("jdbc:sqlserver://192.168.0.134:1433;DatabaseName=app", "test", "bpmlink");
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mybatis?useUnicode=true&characterEncoding=utf-8&useSSL=false", "ljh", "123456");
-            String insertSql = "INSERT INTO COMMAND_CONTENT(CONTENT,COMMAND_ID) VALUES(?, ?)";
+            String insertSql = "INSERT INTO command_content(CONTENT,COMMAND_ID) VALUES(?, ?)";
             PreparedStatement statement = conn.prepareStatement(insertSql);
             for (CommandContent content : contentList) {
                 statement.setString(1, content.getContent());
@@ -49,7 +49,6 @@ public class CommandContentDao {
     public void insertBatch(List<CommandContent> contentList) {
         DBAccess dbAccess = new DBAccess();
         try (SqlSession sqlSession = dbAccess.getSqlSession()) {
-            // 通过sqlSession执行SQL语句
             ICommandContent commandContent = sqlSession.getMapper(ICommandContent.class);
             commandContent.insertBatch(contentList);
             sqlSession.commit();

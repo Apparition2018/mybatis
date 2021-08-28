@@ -3,7 +3,7 @@
  */
 $(function () {
     render();
-    var content = "客官，来啦，坐吧！<br/>回复[查看]收取更多精彩内容。";
+    let content = "客官，来啦，坐吧！<br/>回复[查看]收取更多精彩内容。";
     content += "<br/>回复[帮助]可以查看所有可用的指令。";
     // 添加公众号的开场白
     appendDialog("talk_recordbox", "公众号", content);
@@ -14,7 +14,7 @@ $(function () {
  * 发送消息
  */
 function send() {
-    var content = $("#content").val();
+    let content = $("#content").val();
     if (!content) {
         alert("请输入内容！");
         return;
@@ -39,7 +39,7 @@ function send() {
  */
 function render() {
     // the element we want to apply the jScrollPane
-    var $el = $('#jp-container').jScrollPane({
+    let $el = $('#jp-container').jScrollPane({
             verticalGutter: -16
         }),
         // the extension functions and options
@@ -63,12 +63,12 @@ function render() {
             addHoverFunc: function () {
                 // run only if the window has a width bigger than deviceWidth
                 if ($(window).width() <= this.extPluginOpts.deviceWidth) return false;
-                var instance = this;
+                let instance = this;
                 // functions to show / hide the scrollbar
                 $.fn.jspmouseenter = $.fn.show;
                 $.fn.jspmouseleave = $.fn.fadeOut;
                 // hide the jScrollPane vertical bar
-                var $vBar = this.getContentPane().siblings('.jspVerticalBar').hide();
+                let $vBar = this.getContentPane().siblings('.jspVerticalBar').hide();
                 /*
                  * mouseenter / mouseleave events on the main element
                  * also scrollstart / scrollstop - @James Padolsey : http://james.padolsey.com/javascript/special-scroll-events-for-jquery/
@@ -114,7 +114,7 @@ function render() {
                     });
                     // wrap the scrollbar
                     // we need this to be able to add the mouseenter / mouseleave events to the scrollbar
-                    var $vBarWrapper = $('<div/>').css({
+                    let $vBarWrapper = $('<div/>').css({
                         position: 'absolute',
                         left: $vBar.css('left'),
                         top: $vBar.css('top'),
@@ -159,7 +159,7 @@ function render() {
  * @param content 发送的内容
  */
 function appendDialog(myClass, name, content) {
-    var div = "";
+    let div = "";
     div += "<div class='" + myClass + "'>";
     div += "<div class='user'><img src='" + $("#basePath").val() + "static/images/thumbs/" + myClass + ".jpg'/>" + name + "</div>";
     div += "<div class='talk_recordtextbg'>&nbsp;</div>";
@@ -176,6 +176,6 @@ function appendDialog(myClass, name, content) {
  * @returns {String} 当前系统时间
  */
 function getCurrentDate() {
-    var date = new Date();
+    let date = new Date();
     return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes());
 }

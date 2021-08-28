@@ -19,7 +19,7 @@ public class MaintainService {
      * 单条删除
      */
     public void deleteOne(String id) {
-        if (id != null && !"".equalsIgnoreCase(id.trim())) {
+        if (id != null && !"".equals(id.trim())) {
             new MessageDao().deleteOne(Integer.parseInt(id));
         }
     }

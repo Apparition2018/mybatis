@@ -32,15 +32,14 @@ public class MessageDao2 {
 
             StringBuilder sql = new StringBuilder("SELECT ID, COMMAND, DESCRIPTION, CONTENT FROM MESSAGE WHERE 1 = 1");
             List<String> paramList = new ArrayList<>();
-            if (command != null && !"".equalsIgnoreCase(command.trim())) {
+            if (command != null && !"".equals(command.trim())) {
                 sql.append(" and COMMAND = ?");
                 paramList.add(command);
             }
-            if (description != null && !"".equalsIgnoreCase(description.trim())) {
+            if (description != null && !"".equals(description.trim())) {
                 sql.append(" and DESCRIPTION like ?");
                 paramList.add("%" + description + "%");
             }
-            System.out.println(sql.toString());
             PreparedStatement statement = conn.prepareStatement(sql.toString());
             for (int i = 0; i < paramList.size(); i++) {
                 statement.setString(i + 1, paramList.get(i));

@@ -9,5 +9,5 @@ import java.util.List;
  * created on 2019/8/6 18:16
  */
 public interface MyInterface {
-    public List<Object> query(Object parameter);
+    List<Object> query(Object parameter);
 }

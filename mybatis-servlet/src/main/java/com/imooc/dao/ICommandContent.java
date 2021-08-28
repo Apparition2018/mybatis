@@ -17,10 +17,10 @@ public interface ICommandContent {
     /**
      * 单条新增
      */
-    public void insertOne(CommandContent content);
+    void insertOne(CommandContent content);
 
     /**
      * 批量新增
      */
-    public void insertBatch(List<CommandContent> content);
+    void insertBatch(List<CommandContent> content);
 }

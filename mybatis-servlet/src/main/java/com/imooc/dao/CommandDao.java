@@ -28,7 +28,6 @@ public class CommandDao {
             Command command = new Command();
             command.setName(name);
             command.setDescription(description);
-            // 通过sqlSession执行SQL语句
             commandList = sqlSession.selectList("Command.queryCommandList", command);
         } catch (IOException e) {
             e.printStackTrace();

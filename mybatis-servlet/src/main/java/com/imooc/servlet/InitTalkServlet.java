@@ -20,6 +20,7 @@ public class InitTalkServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // 设置编码
         req.setCharacterEncoding("UTF-8");
+        // 向页面跳转
         req.getRequestDispatcher("/WEB-INF/jsp/front/talk.jsp").forward(req, resp);
     }
 

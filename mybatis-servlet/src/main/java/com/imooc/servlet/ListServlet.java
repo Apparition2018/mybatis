@@ -34,7 +34,7 @@ public class ListServlet extends HttpServlet {
         if (currentPage == null || !pattern.matcher(currentPage).matches()) {
             page.setCurrentPage(1);
         } else {
-            page.setCurrentPage(Integer.valueOf(currentPage));
+            page.setCurrentPage(Integer.parseInt(currentPage));
         }
         QueryService queryService = new QueryService();
         // 查询消息列表并传给页面

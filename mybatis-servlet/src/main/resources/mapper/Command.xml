@@ -3,6 +3,7 @@
 <mapper namespace="Command">
     <!-- <collection> 一对多
         https://www.cnblogs.com/yuan951/p/7594176.html -->
+    <!-- a.ID 起了别名是为了不与 b.ID 起冲突 -->
     <resultMap type="com.imooc.bean.Command" id="Command">
         <id column="C_ID" jdbcType="INTEGER" property="id"/>
         <result column="NAME" jdbcType="VARCHAR" property="name"/>
@@ -12,8 +13,8 @@
 
     <select id="queryCommandList" parameterType="com.imooc.bean.Command" resultMap="Command">
         SELECT a.ID C_ID, a.NAME, a.DESCRIPTION, b.ID, b.CONTENT, b.COMMAND_ID
-        FROM COMMAND a
-        LEFT JOIN COMMAND_CONTENT b
+        FROM command a
+        LEFT JOIN command_content b
         ON a.ID = b.COMMAND_ID
         <where>
             <if test="name != null and !&quot;&quot;.equals(name.trim())">
@@ -31,6 +32,6 @@
         https://bugyun.iteye.com/blog/2286145
     -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.imooc.bean.Command">
-        INSERT INTO COMMAND (NAME, DESCRIPTION) VALUES (#{name}, #{description})
+        INSERT INTO command (NAME, DESCRIPTION) VALUES (#{name}, #{description})
     </insert>
 </mapper>

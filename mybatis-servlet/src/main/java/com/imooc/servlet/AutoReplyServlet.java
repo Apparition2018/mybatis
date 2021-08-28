@@ -20,19 +20,19 @@ import java.io.PrintWriter;
 public class AutoReplyServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // 设置 content-type
         resp.setContentType("text/html;charset=utf-8");
         PrintWriter out = resp.getWriter();
         QueryService queryService = new QueryService();
+        // 把结果写到页面
         out.write(queryService.queryByCommand(req.getParameter("content")));
         out.flush();
         out.close();
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.doGet(req, resp);
     }
 }

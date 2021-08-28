@@ -66,7 +66,6 @@ public class PageInterceptor implements Interceptor {
 
     @Override
     public Object plugin(Object target) {
-        System.out.println(this.test);
         return Plugin.wrap(target, this);
     }
 

@@ -2,13 +2,12 @@ package com.imooc.bean;
 
 /**
  * Message
- *
- * 消息表实力类
+ * <p>
+ * 消息表实体类
  *
  * @author Arsenal
  * created on 2019/8/2 10:57
  */
-
 public class Message {
 
     /**

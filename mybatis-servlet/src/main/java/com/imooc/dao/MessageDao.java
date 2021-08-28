@@ -45,7 +45,6 @@ public class MessageDao {
         DBAccess dbAccess = new DBAccess();
         List<Message> messageList = new ArrayList<>();
         try (SqlSession sqlSession = dbAccess.getSqlSession()) {
-            // 通过sqlSession执行SQL语句
             IMessage imessage = sqlSession.getMapper(IMessage.class);
             messageList = imessage.queryMessageListByPage(parameter);
         } catch (Exception e) {
@@ -61,7 +60,6 @@ public class MessageDao {
         DBAccess dbAccess = new DBAccess();
         int result = 0;
         try (SqlSession sqlSession = dbAccess.getSqlSession()) {
-            // 通过sqlSession执行SQL语句
             IMessage imessage = sqlSession.getMapper(IMessage.class);
             result = imessage.count(message);
         } catch (Exception e) {
@@ -76,8 +74,7 @@ public class MessageDao {
     public void deleteOne(int id) {
         DBAccess dbAccess = new DBAccess();
         try (SqlSession sqlSession = dbAccess.getSqlSession()) {
-            // 通过 sqlSession 执行 SQL 语句
-            sqlSession.delete("Message.deleteOne", id);
+            sqlSession.delete("com.imooc.dao.IMessage.deleteOne", id);
             sqlSession.commit();
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,8 +87,7 @@ public class MessageDao {
     public void deleteBatch(List<Integer> id) {
         DBAccess dbAccess = new DBAccess();
         try (SqlSession sqlSession = dbAccess.getSqlSession()) {
-            // 通过 sqlSession 执行 SQL 语句
-            sqlSession.delete("Message.deleteBatch", id);
+            sqlSession.delete("com.imooc.dao.IMessage.deleteBatch", id);
             sqlSession.commit();
         } catch (IOException e) {
             e.printStackTrace();

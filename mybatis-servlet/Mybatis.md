@@ -1,6 +1,9 @@
 # Mybatis
 
 ---
+## 参考网站
+1. [MyBatis 3](https://mybatis.org/mybatis-3/zh/index.html)
+---
 ## Configuration
 - [Configuration.xml](.\src\main\resources\Configuration.xml)
 ---
@@ -93,15 +96,19 @@
 </table>
 
 ---
-## 常用标签
-0. &lt;resultMap&gt;: 配置查询结果集中列名和 java 对象属性的对应关系
-1. &lt;sql&gt;: 可被其它语句引用的可重用语句块  
+## 标签
+1. &lt;resultMap&gt;: 配置查询结果集中列名和 java 对象属性的对应关系
+    1. &lt;collection&gt;  
+        `<collection property="child" resultMap="Child.Child"/>`
+    2. &lt;association&gt;  
+        `<association property="parent" resultMap="Parent.Parent"/>`
+2. &lt;sql&gt;: 可被其它语句引用的可重用语句块  
     `<sql id="test"/>`
-2. &lt;include&gt;: 引用 &lt;sql&gt;  
+3. &lt;include&gt;: 引用 &lt;sql&gt;  
     `<include refid="test"/>`
-3. &lt;where&gt;: 代替 where 关键字，会去除第一个 and|or
-4. &lt;set&gt;: 代替 set 关键字，会去掉最后一个 ,
-5. &lt;trim&gt;  
+4. &lt;where&gt;: 代替 where 关键字，会去除第一个 and|or
+5. &lt;set&gt;: 代替 set 关键字，会去掉最后一个 ,
+6. &lt;trim&gt;  
     5.1 在前面添加 prefix 的内容，在后面添加 suffix 的内容  
     5.2 切掉前面 prefixOverrides 的内容，切掉后面 suffixOverrides 的内容
     ```xml
@@ -112,21 +119,27 @@
         <trim prefix="set" suffixOverrides=","/>
     </demo>
     ```
-6. &lt;if&gt;  
+7. &lt;if&gt;  
     `<if test=""/>`
-7. &lt;choose&gt;
+8. &lt;choose&gt;
     ```xml
     <choose>
         <when test=""></when>
         <when test=""></when>
         <otherwise></otherwise>
     </choose>
-8. &lt;foreach&gt;  
+9. &lt;foreach&gt;  
     `<foreach collection="list" item="item" open="(" separator="," close=")">`
-9. &lt;collection&gt;  
-    `<collection property="child" resultMap="Child.Child"/>`
-10. &lt;association&gt;  
-    `<association property="parent" resultMap="Parent.Parent"/>`
+---
+## 标签属性
+```
+flushCache          默认 false；语句被调用，清空本地缓存和二级缓存
+useCache            默认 select 元素 true；二级缓存语句结果
+timeout             超时秒数
+fetchSize           结果行数
+useGeneratedKeys    使用 JDBC 的 getGeneratedKeys 方法来取出由生成的主键
+keyProperty         唯一识别对象的属性
+``` 
 ---
 ## 多表关联
 1. [一对多](.\src\main\resources\mapper\Command.xml)

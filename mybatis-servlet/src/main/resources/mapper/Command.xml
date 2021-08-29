@@ -26,11 +26,6 @@
         </where>
     </select>
 
-    <!--
-        useGeneratedKeys: 自增主键
-        keyProperty: 自增主键赋值给指定属性，通过 getter 方法可以获取
-        https://bugyun.iteye.com/blog/2286145
-    -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.imooc.bean.Command">
         INSERT INTO command (NAME, DESCRIPTION) VALUES (#{name}, #{description})
     </insert>

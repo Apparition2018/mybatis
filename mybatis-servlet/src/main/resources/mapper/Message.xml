@@ -15,7 +15,6 @@
     <!--
         OGNL 表达式可以直接调用 java 方法，如下：equals(), trim()
         OGNL 表达式 html 转义字符，如下：&quot; 表示 ";
-        <where> 会去掉第一个 and|or
      -->
     <select id="queryMessageList" parameterType="java.util.Map" resultMap="MessageResult">
         SELECT
@@ -64,12 +63,6 @@
         </where>
     </select>
 
-    <!--
-        <trim>  如果标签内有内容，则在前面添加 prefix 的内容，在后面添加 suffix 的内容，
-                切掉前面 prefixOverrides 的内容，切掉后面 suffixOverrides 的内容；
-        <where> 可以这样代替：<trim prefix="where" prefixOverrides="and|or">
-        <set>   可以这样代替：<trim prefix="set" suffixOverrides=",">
-    -->
     <insert id="insertMessage" parameterType="com.imooc.bean.Message">
         INSERT INTO message
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -86,7 +79,6 @@
         </trim>
     </insert>
 
-    <!-- <set> 会去掉最后一个 , -->
     <update id="updateMessage">
         UPDATE MESSAGE
         <set>
@@ -98,15 +90,6 @@
             </if>
         </set>
     </update>
-
-    <!--
-        其它常用标签：
-        <choose>
-            <when test="...">...</when>
-            <when test="...">...</when>
-            <otherwise>...</otherwise>
-        </choose>
-    -->
 
     <delete id="deleteOne" parameterType="int">
         DELETE FROM message WHERE ID = #{_parameter}

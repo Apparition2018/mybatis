@@ -1,4 +1,4 @@
-package com.imooc.test;
+package com.imooc.iop;
 
 import java.lang.reflect.Proxy;
 

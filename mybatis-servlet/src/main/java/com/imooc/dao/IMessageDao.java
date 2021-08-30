@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * IMessage
+ * IMessageDao
  * <p>
- * 与 Message 配置文件相对应的接口
+ * 与 Message.xml 配置文件相对应的接口
  *
  * @author Arsenal
  * created on 2019/8/6 17:08
  */
-public interface IMessage {
+public interface IMessageDao {
 
     /**
      * 根据查询条件查询消息列表

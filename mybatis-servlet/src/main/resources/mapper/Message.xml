@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.imooc.dao.IMessage">
+<mapper namespace="com.imooc.dao.IMessageDao">
     <!-- typeHandlers：类型处理器
         https://www.cnblogs.com/hellowhy/p/9670635.html -->
     <resultMap type="com.imooc.bean.Message" id="MessageResult">
@@ -13,7 +13,6 @@
     <sql id="columns">ID, COMMAND, DESCRIPTION, CONTENT</sql>
 
     <!--
-        OGNL 表达式可以直接调用 java 方法，如下：equals(), trim()
         OGNL 表达式 html 转义字符，如下：&quot; 表示 ";
      -->
     <select id="queryMessageList" parameterType="java.util.Map" resultMap="MessageResult">

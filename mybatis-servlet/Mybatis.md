@@ -28,6 +28,8 @@
     ```
 ---
 ## [OGNL](https://www.cnblogs.com/lxl57610/p/7436648.html)
+- Object-Graph Navigation Language，可以存取对象的任意属性，调用对象的方法，遍历整个对象的结构图，实现字段类型转化等功能。
+- [xml 转义字符](https://www.cnblogs.com/ypppt/p/12912980.html)
 <table>
    <tr>
       <th colspan="4">Mybatis 中的 OGNL 表达式</th>
@@ -148,4 +150,10 @@ keyProperty         唯一识别对象的属性
 ## #{} 与 ${}
 1. \#{}: 参数占位符 ?，防止 SQL 注入
 2. ${}: 不转移的字符串，一般用于传入数据库对象
+---
+## 面向接口编程
+- [模拟 mybatis 接口式编程](.\src\main\java\com\imooc\iop\IopDemo.java)
+---
+## 拦截器
+- [拦截器实现分页](.\src\main\java\com\imooc\interceptor\PageInterceptor.java)
 ---

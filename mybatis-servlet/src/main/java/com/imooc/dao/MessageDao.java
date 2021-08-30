@@ -30,7 +30,7 @@ public class MessageDao {
             // messageList = sqlSession.selectList("Message.queryMessageList", parameter);
             // 接口式编程 (mybatis-spring)， 上面一行替换成下面两行代码
             // 接口全名称.方法名 = namespace.id
-            IMessage mapper = sqlSession.getMapper(IMessage.class);
+            IMessageDao mapper = sqlSession.getMapper(IMessageDao.class);
             messageList = mapper.queryMessageList(parameter);
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ public class MessageDao {
         DBAccess dbAccess = new DBAccess();
         List<Message> messageList = new ArrayList<>();
         try (SqlSession sqlSession = dbAccess.getSqlSession()) {
-            IMessage imessage = sqlSession.getMapper(IMessage.class);
+            IMessageDao imessage = sqlSession.getMapper(IMessageDao.class);
             messageList = imessage.queryMessageListByPage(parameter);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class MessageDao {
         DBAccess dbAccess = new DBAccess();
         int result = 0;
         try (SqlSession sqlSession = dbAccess.getSqlSession()) {
-            IMessage imessage = sqlSession.getMapper(IMessage.class);
+            IMessageDao imessage = sqlSession.getMapper(IMessageDao.class);
             result = imessage.count(message);
         } catch (Exception e) {
             e.printStackTrace();

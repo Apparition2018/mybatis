@@ -1,4 +1,4 @@
-package com.imooc.test;
+package com.imooc.iop;
 
 import java.util.List;
 
@@ -8,6 +8,6 @@ import java.util.List;
  * @author Arsenal
  * created on 2019/8/6 18:16
  */
-public interface MyInterface {
+public interface MyMapper {
     List<Object> query(Object parameter);
 }

@@ -294,7 +294,7 @@ public class RetrieveTest {
     public void selectCount() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("name", "雨").lt("age", 40);
-        Integer count = userMapper.selectCount(queryWrapper);
+        Long count = userMapper.selectCount(queryWrapper);
         System.out.println("count = " + count);
     }
 

@@ -2,7 +2,7 @@
 
 ---
 ## 参考网站
-1. [MyBatis-Plus](https://mp.baomidou.com/guide/#%E7%89%B9%E6%80%A7)
+1. [MyBatis-Plus](https://baomidou.com/pages/24112f/)
 2. [MyBatis-Plus Samples](https://github.com/baomidou/mybatis-plus-samples)
 3. [MyBatis-Plus入门教程-慕课网](https://www.imooc.com/learn/1130)
 4. [MyBatis-Plus进阶-慕课网](https://www.imooc.com/learn/1171)
@@ -18,11 +18,11 @@
     - 提供了很多 CRUD 方法，开发效率高
     - 对象化程度更高
 ---
-## [配置](https://mp.baomidou.com/config/)
+## [配置](https://baomidou.com/pages/3b5af0/)
 ```yaml
 mybatis-plus:
   # MyBatis Mapper 所对应的 XML 文件位置
-  mapper-locations: classpath*:mapper/**/*.xml
+  mapper-locations: /classpath*:mapper/**/*.xml
   # 全局策略
   global-config:
     db-config:
@@ -62,7 +62,7 @@ public interface UserService extends IService<User> { }
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService { }
 ```
 ---
-## [常用注解](https://mp.baomidou.com/guide/annotation.html)
+## [常用注解](https://baomidou.com/pages/223848/)
 1. @TableName
 ```java
 // 使实体 User 对应数据表 mp_user
@@ -78,7 +78,7 @@ public class User {
     private Long userId;
 }
 ```
-3. [@TableField](https://mp.baomidou.com/guide/annotation.html#tablefield)
+3. [@TableField](https://baomidou.com/pages/223848/#tablefield)
 ```java
 @TableName(autoResultMap = true)
 public class User {
@@ -147,8 +147,8 @@ public interface UserMapper extends BaseMapper<User> {
 }
 ```
 ---
-## [条件构造器](https://mp.baomidou.com/guide/wrapper.html)
-1. [AbstractWrapper](https://mp.baomidou.com/guide/wrapper.html#abstractwrapper)
+## [条件构造器](https://baomidou.com/pages/10c804/)
+1. [AbstractWrapper](https://baomidou.com/pages/10c804/#abstractwrapper)
     - QueryWrapper(LambdaQueryWrapper) 和 UpdateWrapper(LambdaUpdateWrapper) 的父类，用于生成 WHERE 条件
 ```
 allEq()                                全部 eq（或个别 isNull）
@@ -157,7 +157,7 @@ func()                                 主要在 if...else 调用
 apply()                                拼接 SQL
 last()                                 直接拼接到 SQL 最后
 ```
-2. [QueryWrapper](https://mp.baomidou.com/guide/wrapper.html#querywrapper)
+2. [QueryWrapper](https://baomidou.com/pages/10c804/#querywrapper)
 ```
 QueryWrapper([T entity])               创建 QueryWrapper
 Wrappers.query([T entity])             创建 QueryWrapper
@@ -166,7 +166,7 @@ Wrappers.lambdaQuery([T entity])       创建 LamdaQueryWrapper
 lambda()                               创建 LamdaQueryWrapper
 select()                               设置查询字段
 ```
-3. [UpdateWrapper](https://mp.baomidou.com/guide/wrapper.html#updatewrapper)
+3. [UpdateWrapper](https://baomidou.com/pages/10c804/#updatewrapper)
 ```
 UpdateWrapper([[T entity])             创建 QueryWrapper
 Wrappers.update([T entity])            创建 QueryWrapper
@@ -174,7 +174,7 @@ set()                                  SQL SET 字段
 setSql()                               设置 SET 部分 SQL
 ```
 ---
-## [分页查询](https://mp.baomidou.com/guide/page.html)
+## [分页查询](https://baomidou.com/pages/97710a/)
 1. MybatisPlusInterceptor
 ```java
 @Configuration
@@ -244,7 +244,7 @@ public class User {
 </select>
 ```
 ---
-## [逻辑删除](https://mp.baomidou.com/guide/logic-delete.html)
+## [逻辑删除](https://baomidou.com/pages/6b03c5/)
 1. application.yml 配置
 ```yaml
 mybatis-plus:
@@ -263,7 +263,7 @@ mybatis-plus:
 private Integer deleted;
 ```
 ---
-## [通用枚举](https://mp.baomidou.com/guide/enum.html)
+## [通用枚举](https://baomidou.com/pages/8390a4/)
 1. application.yml 配置
 ```yaml
 mybatis-plus:
@@ -285,7 +285,7 @@ public class Person {
 }
 ```
 ---
-## [字段类型处理器](https://mp.baomidou.com/guide/typehandler.html)
+## [字段类型处理器](https://baomidou.com/pages/fd41d8/)
 1. [设置 TypeHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\component\MpJsonConfig.java)
 2. [自定义 TypeHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\typehandler\WalletListTypeHandler.java)
 3. 注解
@@ -300,7 +300,7 @@ public class People {
 }
 ```
 ---
-## [自动填充](https://mp.baomidou.com/guide/auto-fill-metainfo.html)
+## [自动填充](https://baomidou.com/pages/4c6bcf/)
 1. [自定义实现 MetaObjectHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\component\MyMetaObjectHandler.java)
 2. 注解填充字段
 ```java
@@ -312,7 +312,7 @@ abstract class BaseEntity {
 }
 ```
 ---
-## [SQL 注入器](https://mp.baomidou.com/guide/sql-injector.html)
+## [SQL 注入器](https://baomidou.com/pages/42ea4a/)
 1. [创建定义方法的类](.\mybatis-plus-advance\src\main\java\com\ljh\mp\method\DeleteAllMethod.java)
 2. [创建注入器](.\mybatis-plus-advance\src\main\java\com\ljh\mp\injector\MySqlInjector.java)
 3. 在 Mapper 中加入自定义方法
@@ -325,7 +325,7 @@ public interface MyMapper<T> extends BaseMapper<T> {
 }
 ```
 ---
-## [执行 SQL 分析打印](https://mp.baomidou.com/guide/p6spy.html)
+## [执行 SQL 分析打印](https://baomidou.com/pages/833fab/)
 1. p6spy 依赖引入
 ```
 <dependency>
@@ -357,7 +357,7 @@ public interface UserMapper extends BaseMapper<User> { }
 User user = new User().selectById(1);
 ```
 ---
-## [乐观锁](https://mp.baomidou.com/guide/interceptor-optimistic-locker.html)
+## [乐观锁](https://baomidou.com/pages/0d93c0/)
 - 当要更新一条记录的时候，希望这条记录没有被别人更新
 - 乐观锁实现方式：
    1. 取出记录时，获取当前 version
@@ -393,7 +393,7 @@ user.setVersion(1);
 int rows = userMapper.updateById(user);
 ```
 ---
-## [多租户](https://mp.baomidou.com/guide/interceptor-tenant-line.html)
+## [多租户](https://baomidou.com/pages/aef2f2/)
 1. MybatisPlusInterceptor
 ```java
 @Configuration
@@ -443,7 +443,7 @@ public class MyBatisPlusConfig {
 int rows = userMapper.deleteAll();
 ```
 ---
-## [动态表名](https://mp.baomidou.com/guide/interceptor-dynamic-table-name.html)
+## [动态表名](https://baomidou.com/pages/2a45ff/)
 - 应用场景：数据库有一类表名相类似，比如：sys_log_20210701，sys_log_20210702，sys_log_20210703 等
 1. MybatisPlusInterceptor
 ```java

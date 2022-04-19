@@ -20,7 +20,6 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>${jackson-bom.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>

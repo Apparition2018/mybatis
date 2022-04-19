@@ -13,7 +13,7 @@
 <!--        </collection>-->
     </resultMap>
 
-    <select id="list" resultType="user">
+    <select id="list" resultMap="User">
         select * from user
     </select>
 

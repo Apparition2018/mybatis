@@ -15,17 +15,22 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>mybatis-basics</module>
-        <module>mybatis-plus</module>
-        <!-- 通过自动回复机器人学Mybatis -->
+        <!-- 6010：通过自动回复机器人学Mybatis -->
         <module>mybatis-servlet</module>
+        <!-- 6011：Mybatis Test -->
+        <module>mybatis-basics</module>
+        <!-- MyBatis-Plus入门教程 -->
+        <!-- MyBatis-Plus进阶 -->
+        <!-- 6011：mybatis-plus-basics -->
+        <!-- 6012：mybatis-plus-advance -->
+        <module>mybatis-plus</module>
     </modules>
 
     <properties>
         <pagehelper-spring-boot-starter.version>1.4.2</pagehelper-spring-boot-starter.version>
-        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
-        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
-        <dynamic-datasource-spring-boot-starter.verson>3.5.1</dynamic-datasource-spring-boot-starter.verson>
+        <mybatis-plus-boot-starter.version>3.5.0</mybatis-plus-boot-starter.version>
+        <mybatis-plus-generator.version>3.5.0</mybatis-plus-generator.version>
+        <dynamic-datasource-spring-boot-starter.verson>3.5.0</dynamic-datasource-spring-boot-starter.verson>
         <p6spy.version>3.9.1</p6spy.version>
         <velocity-engine-core.version>2.3</velocity-engine-core.version>
     </properties>

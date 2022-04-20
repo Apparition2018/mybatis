@@ -5,9 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ljh.dao.OrdersMapper;
+import com.ljh.dao.SysDeptMapper;
 import com.ljh.dao.UserMapper;
-import com.ljh.entity.Orders;
 import com.ljh.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +29,24 @@ public class PageHelperTest {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private OrdersMapper ordersMapper;
+    private SysDeptMapper sysDeptMapper;
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     public void test() throws JsonProcessingException {
         /* 返回 Page */
-        Page<Orders> ordersPage = PageHelper.startPage(1, 2).doSelectPage(() -> ordersMapper.list());
-        System.out.println(objectMapper.writeValueAsString(ordersPage));
+        Page<SysDeptMapper> deptPage = PageHelper.startPage(1, 2).doSelectPage(() -> sysDeptMapper.list(null));
+        System.out.println(objectMapper.writeValueAsString(deptPage));
         System.out.println("====================");
 
         /* 返回 PageInfo */
-        PageInfo<Orders> ordersPageInfo = PageHelper.startPage(1, 2).doSelectPageInfo(() -> ordersMapper.list());
-        System.out.println(objectMapper.writeValueAsString(ordersPageInfo));
+        PageInfo<SysDeptMapper> deptPageInfo = PageHelper.startPage(1, 2).doSelectPageInfo(() -> sysDeptMapper.list(null));
+        System.out.println(objectMapper.writeValueAsString(deptPageInfo));
         System.out.println("====================");
 
         /* 返回 sql 返回数据条数 */
-        long count = PageHelper.count(() -> ordersMapper.list());
+        long count = PageHelper.count(() -> sysDeptMapper.list(null));
         System.out.println(count);
     }
 
@@ -61,5 +60,4 @@ public class PageHelperTest {
         userPageInfo.setList(userList);
         System.err.println(objectMapper.writeValueAsString(userPageInfo));
     }
-
 }

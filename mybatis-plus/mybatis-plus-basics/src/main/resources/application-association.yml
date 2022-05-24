@@ -6,5 +6,5 @@ spring:
     password: test
   sql:
     init:
-      schema-locations: classpath:sql/associtaion/schema-h2.sql
-      data-locations: classpath:sql/associtaion/data-h2.sql
+      schema-locations: classpath:sql/association/schema-h2.sql
+      data-locations: classpath:sql/association/data-h2.sql

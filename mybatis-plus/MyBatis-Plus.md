@@ -29,9 +29,9 @@ mybatis-plus:
       # 主键全局策略
       id-type: assign_uuid
       # 字段验证策略
-      select-strategy: default
       insert-strategy: default
       update-strategy: default
+      where-strategy: default
       # 表名前缀
       # table-prefix: mp_
       # 逻辑未删除值
@@ -453,14 +453,8 @@ public class MyBatisPlusConfig {
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
-        Map<String, TableNameHandler> tableNameHandlerMap = new HashMap<String, TableNameHandler>(2) {
-            private static final long serialVersionUID = 7009035918628703069L;
-            {
-                // 自定义替换逻辑
-                put("user", (sql, tableName) -> DynamicTableName.get() != null ? DynamicTableName.get() : tableName);
-            }
-        };
-        dynamicTableNameInnerInterceptor.setTableNameHandlerMap(tableNameHandlerMap);
+        dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) ->
+                DynamicTableName.get() != null ? DynamicTableName.get() : tableName);
         interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
         return interceptor;
     }

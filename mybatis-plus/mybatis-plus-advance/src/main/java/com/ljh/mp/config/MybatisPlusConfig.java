@@ -1,28 +1,24 @@
 package com.ljh.mp.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.handler.TableNameHandler;
-import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
-import com.baomidou.mybatisplus.extension.plugins.inner.*;
+import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.ljh.mp.util.DynamicTableName;
-import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.LongValue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 public class MybatisPlusConfig {
 
     /**
-     * https://mp.baomidou.com/guide/interceptor.html
+     * https://baomidou.com/pages/2976a3/
      * 建议使用如下顺序：
-     * 1）多租户,动态表名
-     * 2）分页,乐观锁
-     * 3）sql性能规范,防止全表更新与删除
-     * 注：对sql进行单次改造的优先放入,不对sql进行改造的最后放入
+     * 1）多租户，动态表名
+     * 2）分页，乐观锁
+     * 3）sql 性能规范，防止全表更新与删除
+     * 注：对 sql 进行单次改造的优先放入,不对 sql 进行改造的最后放入
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -60,13 +56,8 @@ public class MybatisPlusConfig {
 //        }));
         // 动态表名
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
-        Map<String, TableNameHandler> tableNameHandlerMap = new HashMap<String, TableNameHandler>() {
-            private static final long serialVersionUID = 7009035918628703069L;
-            {
-                put("user", (sql, tableName) -> DynamicTableName.get() != null ? DynamicTableName.get() : tableName);
-            }
-        };
-        dynamicTableNameInnerInterceptor.setTableNameHandlerMap(tableNameHandlerMap);
+        dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) ->
+                DynamicTableName.get() != null ? DynamicTableName.get() : tableName);
         interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
         // 分页
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor());

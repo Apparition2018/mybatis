@@ -21,7 +21,7 @@ import java.util.List;
 public class AssociationTest {
 
     @Autowired
-    User3Service user3Service;
+    private User3Service user3Service;
 
     @Test
     public void insert() {
@@ -32,8 +32,8 @@ public class AssociationTest {
         userList.add(new User3().setId(5L).setName("Robert").setAge(20).setCompany(company1));
         userList.add(new User3().setId(6L).setName("Linda").setAge(22).setCompany(company2));
         user3Service.saveBatch(userList);
-        selectPage();
-        update();
+        this.selectPage();
+        this.update();
     }
 
     private void selectPage() {

@@ -15,6 +15,7 @@ public class User3ServiceImpl extends ServiceImpl<User3Mapper, User3> implements
 
     @Override
     public List<User3> selectUserPage(IPage<User3> page, QueryWrapper<User3> wrapper) {
+        System.err.println(baseMapper);
         return baseMapper.selectUserPage(page, wrapper);
     }
 }

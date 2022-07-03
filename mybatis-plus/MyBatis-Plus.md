@@ -22,7 +22,7 @@
 ```yaml
 mybatis-plus:
   # MyBatis Mapper 所对应的 XML 文件位置
-  mapper-locations: /classpath*:mapper/**/*.xml
+  mapper-locations: classpath*:mapper/**/*.xml
   # 全局策略
   global-config:
     db-config:

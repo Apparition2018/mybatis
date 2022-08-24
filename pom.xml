@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version>
+        <version>2.7.3</version>
         <relativePath/>
     </parent>
     <groupId>com.ljh</groupId>
@@ -27,9 +27,9 @@
     </modules>
 
     <properties>
-        <pagehelper-spring-boot-starter.version>1.4.2</pagehelper-spring-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>1.4.3</pagehelper-spring-boot-starter.version>
         <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
-        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.3</mybatis-plus-generator.version>
         <dynamic-datasource-spring-boot-starter.verson>3.5.1</dynamic-datasource-spring-boot-starter.verson>
         <mybatis-plus-join.version>1.2.4</mybatis-plus-join.version>
         <p6spy.version>3.9.1</p6spy.version>

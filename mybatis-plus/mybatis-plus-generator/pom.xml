@@ -27,5 +27,4 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
     </dependencies>
-
 </project>

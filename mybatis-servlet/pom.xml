@@ -8,8 +8,8 @@
     <packaging>war</packaging>
 
     <properties>
-        <spring-boot.version>2.6.3</spring-boot.version>
-        <mybatis.version>3.5.9</mybatis.version>
+        <spring-boot.version>2.7.3</spring-boot.version>
+        <mybatis.version>3.5.10</mybatis.version>
         <standard.version>1.1.2</standard.version>
     </properties>
 

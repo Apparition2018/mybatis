@@ -13,7 +13,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-            <version>${dynamic-datasource-spring-boot-starter.verson}</version>
+            <version>${dynamic-datasource-spring-boot-starter.version}</version>
         </dependency>
 
         <dependency>
@@ -32,5 +32,4 @@
             <version>${p6spy.version}</version>
         </dependency>
     </dependencies>
-
 </project>

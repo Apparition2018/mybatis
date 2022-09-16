@@ -17,7 +17,7 @@
         <module>mybatis-plus-generator</module>
         <module>mybatis-plus-join</module>
     </modules>
-    
+
     <dependencies>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -25,5 +25,4 @@
             <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
     </dependencies>
-
 </project>

@@ -7,7 +7,7 @@
         <groupId>com.ljh</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>mybatis-basics</artifactId>
+    <artifactId>mybatis-basic</artifactId>
 
     <dependencies>
         <dependency>
@@ -16,5 +16,4 @@
             <version>${pagehelper-spring-boot-starter.version}</version>
         </dependency>
     </dependencies>
-
 </project>

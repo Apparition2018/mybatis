@@ -10,47 +10,47 @@
     </welcome-file-list>
 
     <servlet>
-        <servlet-name>ListServlet</servlet-name>
+        <servlet-name>list</servlet-name>
         <servlet-class>com.imooc.servlet.ListServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ListServlet</servlet-name>
+        <servlet-name>list</servlet-name>
         <url-pattern>/List.action</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>DeleteOneServlet</servlet-name>
+        <servlet-name>deleteOne</servlet-name>
         <servlet-class>com.imooc.servlet.DeleteOneServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>DeleteOneServlet</servlet-name>
+        <servlet-name>deleteOne</servlet-name>
         <url-pattern>/DeleteOneServlet.action</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>DeleteBatchServlet</servlet-name>
+        <servlet-name>deleteBatch</servlet-name>
         <servlet-class>com.imooc.servlet.DeleteBatchServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>DeleteBatchServlet</servlet-name>
+        <servlet-name>deleteBatch</servlet-name>
         <url-pattern>/DeleteBatchServlet.action</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>InitTalkServlet</servlet-name>
+        <servlet-name>initTalk</servlet-name>
         <servlet-class>com.imooc.servlet.InitTalkServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>InitTalkServlet</servlet-name>
+        <servlet-name>initTalk</servlet-name>
         <url-pattern>/InitTalkServlet.action</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>AutoReplyServlet</servlet-name>
+        <servlet-name>autoReply</servlet-name>
         <servlet-class>com.imooc.servlet.AutoReplyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>AutoReplyServlet</servlet-name>
+        <servlet-name>autoReply</servlet-name>
         <url-pattern>/AutoReplyServlet.action</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -13,14 +13,14 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-generator</artifactId>
-            <version>${mybatis-plus-generator.version}</version>
+            <version>${mybatis-plus.version}</version>
         </dependency>
 
         <!-- 模板引擎，mp 支持 Velocity（默认）、Freemarker、Beetl -->
         <dependency>
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
-            <version>${velocity-engine-core.version}</version>
+            <version>${velocity.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

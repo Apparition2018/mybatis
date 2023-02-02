@@ -286,8 +286,8 @@ public class Person {
 ```
 ---
 ## [字段类型处理器](https://baomidou.com/pages/fd41d8/)
-1. [设置 TypeHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\component\MpJsonConfig.java)
-2. [自定义 TypeHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\typehandler\WalletListTypeHandler.java)
+1. [设置 TypeHandler](mybatis-plus-advance/src/main/java/com/ljh/mp/component/MpJsonConfig.java)
+2. [自定义 TypeHandler](mybatis-plus-advance/src/main/java/com/ljh/mp/typehandler/WalletListTypeHandler.java)
 3. 注解
 ```java
 @TableName(autoResultMap = true)
@@ -301,7 +301,7 @@ public class People {
 ```
 ---
 ## [自动填充](https://baomidou.com/pages/4c6bcf/)
-1. [自定义实现 MetaObjectHandler](.\mybatis-plus-advance\src\main\java\com\ljh\mp\component\MyMetaObjectHandler.java)
+1. [自定义实现 MetaObjectHandler](mybatis-plus-advance/src/main/java/com/ljh/mp/component/MyMetaObjectHandler.java)
 2. 注解填充字段
 ```java
 abstract class BaseEntity {
@@ -313,8 +313,8 @@ abstract class BaseEntity {
 ```
 ---
 ## [SQL 注入器](https://baomidou.com/pages/42ea4a/)
-1. [创建定义方法的类](.\mybatis-plus-advance\src\main\java\com\ljh\mp\method\DeleteAllMethod.java)
-2. [创建注入器](.\mybatis-plus-advance\src\main\java\com\ljh\mp\injector\MySqlInjector.java)
+1. [创建定义方法的类](mybatis-plus-advance/src/main/java/com/ljh/mp/method/DeleteAllMethod.java)
+2. [创建注入器](mybatis-plus-advance/src/main/java/com/ljh/mp/injector/MySqlInjector.java)
 3. 在 Mapper 中加入自定义方法
 ```java
 public interface MyMapper<T> extends BaseMapper<T> {
@@ -460,7 +460,7 @@ public class MyBatisPlusConfig {
     }
 }
 ```
-2. [DynamicTableName](.\mybatis-plus-advance\src\main\java\com\ljh\mp\util\DynamicTableName.java)
+2. [DynamicTableName](mybatis-plus-advance/src/main/java/com/ljh/mp/util/DynamicTableName.java)
 3. 使用
 ```        
 DynamicTableName.set("user_2019");

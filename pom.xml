@@ -21,15 +21,14 @@
     </modules>
 
     <properties>
-        <spring-boot.version>2.7.5</spring-boot.version>
-        <pagehelper-spring-boot-starter.version>1.4.5</pagehelper-spring-boot-starter.version>
+        <spring-boot.version>2.7.8</spring-boot.version>
+        <pagehelper-spring-boot-starter.version>1.4.6</pagehelper-spring-boot-starter.version>
         <mybatis.version>3.5.11</mybatis.version>
-        <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
-        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
-        <dynamic-datasource-spring-boot-starter.version>3.5.2</dynamic-datasource-spring-boot-starter.version>
-        <mybatis-plus-join.version>1.2.4</mybatis-plus-join.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <dynamic-datasource-spring-boot-starter.version>3.6.1</dynamic-datasource-spring-boot-starter.version>
+        <mybatis-plus-join.version>1.4.2.2</mybatis-plus-join.version>
         <p6spy.version>3.9.1</p6spy.version>
-        <velocity-engine-core.version>2.3</velocity-engine-core.version>
+        <velocity.version>2.3</velocity.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     </properties>
 

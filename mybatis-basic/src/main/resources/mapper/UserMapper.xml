@@ -13,9 +13,13 @@
 <!--        </collection>-->
     </resultMap>
 
+    <select id="list" resultMap="User">
+        select * from `user`
+    </select>
+
     <select id="listByIdIn" resultMap="User">
         select u.id, u.name, u.age, o.id as orderId, o.user_id, o.no
-        from user u
+        from `user` u
         left join orders o on u.id = o.user_id
         where u.id in
         <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">

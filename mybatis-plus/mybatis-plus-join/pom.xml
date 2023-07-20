@@ -12,7 +12,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.yulichang</groupId>
-            <artifactId>mybatis-plus-join</artifactId>
+            <artifactId>mybatis-plus-join-boot-starter</artifactId>
             <version>${mybatis-plus-join.version}</version>
         </dependency>
     </dependencies>

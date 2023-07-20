@@ -1,6 +1,8 @@
-DROP TABLE IF EXISTS user;
+-- H2 keywords：https://h2database.com/html/advanced.html#keywords
+-- H2 expected "identifier" 错误：https://zhuanlan.zhihu.com/p/569908286
+DROP TABLE IF EXISTS `user`;
 
-CREATE TABLE user
+CREATE TABLE `user`
 (
     id 				BIGINT(20) NOT NULL 			COMMENT '主键ID',
     name 			VARCHAR(30) NULL DEFAULT NULL 	COMMENT '姓名',
@@ -18,7 +20,7 @@ CREATE TABLE orders
     PRIMARY KEY (id)
 );
 
----
+
 drop table if exists sys_dept;
 create table sys_dept (
                           dept_id           bigint(20)      not null auto_increment    comment '部门id',

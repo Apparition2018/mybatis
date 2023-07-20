@@ -17,6 +17,8 @@ import java.util.Map;
 public interface SysUserMapper {
     List<SysUser> list(SysUser sysUser);
 
+    List<SysUser> list2(SysUser sysUser);
+
     @MapKey("user_id")
     Map<Integer, Map<String, Object>> map(SysUser sysUser);
 }

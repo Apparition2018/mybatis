@@ -21,15 +21,23 @@
     </modules>
 
     <properties>
-        <spring-boot.version>2.7.8</spring-boot.version>
-        <pagehelper-spring-boot-starter.version>1.4.6</pagehelper-spring-boot-starter.version>
-        <mybatis.version>3.5.11</mybatis.version>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
+        <spring-boot.version>2.7.13</spring-boot.version>
+        <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
+        <pagehelper-spring-boot-starter.version>1.4.7</pagehelper-spring-boot-starter.version>
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <mybatis.version>3.5.13</mybatis.version>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus -->
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
-        <dynamic-datasource-spring-boot-starter.version>3.6.1</dynamic-datasource-spring-boot-starter.version>
-        <mybatis-plus-join.version>1.4.2.2</mybatis-plus-join.version>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
+        <dynamic-datasource-spring-boot-starter.version>4.1.1</dynamic-datasource-spring-boot-starter.version>
+        <!-- https://mvnrepository.com/artifact/com.github.yulichang/mybatis-plus-join -->
+        <mybatis-plus-join.version>1.4.5</mybatis-plus-join.version>
+        <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
         <p6spy.version>3.9.1</p6spy.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core -->
         <velocity.version>2.3</velocity.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>

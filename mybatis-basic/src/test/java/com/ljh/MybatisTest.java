@@ -8,6 +8,7 @@ import com.github.pagehelper.PageInfo;
 import com.ljh.dao.SysDeptMapper;
 import com.ljh.dao.SysUserMapper;
 import com.ljh.dao.UserMapper;
+import com.ljh.entity.SysUser;
 import com.ljh.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,16 @@ public class MybatisTest {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private SysDeptMapper sysDeptMapper;
-    @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private SysDeptMapper sysDeptMapper;
     @Autowired
     private ObjectMapper objectMapper;
 
     /**
-     * PageHelper：https://pagehelper.github.io/docs/howtouse/
+     * <a href="https://pagehelper.github.io/docs/howtouse/">PageHelper</a>
+     *
+     * @see <a href="http://doc.ruoyi.vip/ruoyi/document/htsc.html#分页实现">RuoYi 分页实现</a>
      */
     @Test
     public void testPageHelper() throws JsonProcessingException {
@@ -55,8 +58,14 @@ public class MybatisTest {
     }
 
     /**
-     * 解决 pageHelper 不支持嵌套结果映射
-     * 重要提示：https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/zh/Important.md
+     * 解决 pageHelper 不支持嵌套结果映射<br/>
+     * <a href="https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/zh/Important.md">重要提示</a>
+     * <pre>
+     *  1 只有紧跟在 PageHelper.startPage 方法后的第一个 Mybatis 的查询 (Select) 方法会被分页
+     *  2 不要在系统中配置多个分页插件
+     *  3 不支持带有 for update 语句的分页
+     *  4 不支持嵌套结果映射
+     * </pre>
      */
     @Test
     public void testPageHelperNestedResultMappings() throws JsonProcessingException {
@@ -66,9 +75,7 @@ public class MybatisTest {
         System.out.println(objectMapper.writeValueAsString(userPageInfo));
     }
 
-    /**
-     * `@MapKey
-     */
+    /** &#064;MapKey */
     @Test
     public void testMapKey() {
         sysUserMapper.map(null).entrySet().forEach(user -> {
@@ -80,11 +87,14 @@ public class MybatisTest {
         });
     }
 
-    /**
-     * <association/> 和 <collection/>
-     */
+    /** &lt;association/> 和 &lt;collection/> */
     @Test
     public void testAssociationAndCollection() throws JsonProcessingException {
         System.out.println(objectMapper.writeValueAsString(sysUserMapper.list(null)));
+    }
+
+    @Test
+    public void testAssociation() throws JsonProcessingException {
+        System.out.println(objectMapper.writeValueAsString(sysUserMapper.list2(new SysUser())));
     }
 }
